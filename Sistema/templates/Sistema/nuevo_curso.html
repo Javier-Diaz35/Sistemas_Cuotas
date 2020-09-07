@@ -1,0 +1,22 @@
+{% extends 'Sistema/base.html' %}
+
+
+{% block contenido %}
+
+<h2>Nuevo Curso</h2>
+
+<form method="POST">
+    {% csrf_token %}
+    <table>
+        {{ form.as_table }}
+    </table>
+
+    <input type="reset" value="Limpiar">
+    <input type="submit" value="Guardar">
+    
+
+</form>
+<a href="{% url 'listado_curso' %}"><button>Volver</button></a>
+{{ mensaje }}
+
+{% endblock %}

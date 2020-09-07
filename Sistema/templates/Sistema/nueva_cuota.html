@@ -1,0 +1,21 @@
+{% extends 'Sistema/base.html' %}
+
+
+{% block contenido %}
+
+<h2>Nueva Cuota</h2>
+
+<form method="POST">
+    {% csrf_token %}
+    <table>
+        {{ form.as_table }}
+    </table>
+    
+    <input type="reset" value="Limpiar">
+    <input type="submit" value="Guardar">
+
+</form>
+<a href="{% url 'listado_cuota' %}"><button>Volver</button></a>
+{{ mensaje }}
+
+{% endblock %}

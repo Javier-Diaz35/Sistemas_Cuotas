@@ -1,0 +1,34 @@
+{% extends 'Sistema/base.html' %}
+
+{% block contenido %}
+
+<h2>Listado de Alumnos Ocultos</h2>
+
+<table>
+    <tr>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>D.N.I</th>
+        <th>Curso</th>
+        <th>Celualar</th>
+        <th>Matricula</th>
+    </tr>
+
+
+    {% for a in alumnos %}
+
+    <tr>
+        <td>{{ a.nombre }}</td>
+        <td>{{ a.apellido }}</td>
+        <td>{{ a.dni }}</td>
+        <td>{{ a.curso }}</td>
+        <td>{{ a.celular }}</td>
+        <td>{{ a.matricula }}</td>
+    </tr>
+
+    {% endfor %}
+
+</table>
+
+
+{% endblock %}

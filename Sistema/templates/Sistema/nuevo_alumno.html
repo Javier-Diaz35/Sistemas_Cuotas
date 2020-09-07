@@ -1,0 +1,21 @@
+{% extends 'Sistema/base.html' %}
+
+
+{% block contenido %}
+
+<h2>Nuevo Alumno</h2>
+
+<form method="POST">
+    {% csrf_token %}
+    <table>
+        {{ form.as_table }}
+    </table>
+
+    <input type="reset" value="Limpiar">
+    <input type="submit" value="Guardar">
+    
+
+</form>
+{{ mensaje }}
+<!--<button><a href="{% url 'listado_alumnos' %}">Volver</a></button> -->
+{% endblock %}

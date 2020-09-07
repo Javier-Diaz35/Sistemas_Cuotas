@@ -1,0 +1,30 @@
+{% extends 'Sistema/base.html' %}
+
+{% block contenido %}
+
+<h2>Listado de Cursos</h2>
+<a href="{% url 'nueva_cuota' %}"><button >Nueva Cuota</button></a>
+<table>
+    <tr>
+        <th>Alumno</th>
+        <th>Monto</th>
+        <th>Mes</th>
+    </tr>
+
+
+    {% for c in cuotas %} 
+
+    <tr>
+        <td>{{ c.alumno }}</td>
+        <td>{{ c.monto }}</td>
+        <td>{{ c.numeromes }}</td>
+        <td><a href="{% url 'modificar_cuota' c.pk %}">Modificar</a></td>
+        <td><a href="#" onclick="return confirm('Esta Seguro?')">Eliminar </a></td>
+    </tr>
+
+    {% endfor %}
+
+</table>
+
+
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'Sistema/base.html' %}
+
+{% block contenido %}
+</br>
+<h2>Ultimos Pagos</h2>
+</br>
+<table class="table table-hover my-0">
+    <tr>
+        <th>Alumno</th>
+        <th>Cuota</th>
+        <th>Fecha de Pago</th>
+        <th>Total</th>
+    </tr>
+
+
+    {% for p in pagos %} 
+
+    <tr>
+        <td>{{ p.alumno }}</td>
+        <td>{{ p.cuotaEstablecida }}</td>
+        <td>{{ p.fechaPago }}</td>
+        <td>{{ p.total }}</td>
+        <!--<td><a href="#" onclick="return confirm('Esta Seguro?')">Eliminar </a></td>-->
+    </tr>
+
+    {% endfor %}
+
+</table>
+
+
+{% endblock %}

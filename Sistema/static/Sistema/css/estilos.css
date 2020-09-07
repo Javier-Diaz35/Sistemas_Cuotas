@@ -1,0 +1,374 @@
+* {
+    margin:0;
+    padding: 0;
+}
+
+body {
+    background-color:rgb(219, 219, 219);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.galeria > a > img {
+    width: 200px;
+    height: 350px;
+    object-fit: cover;
+}
+
+.imagen_slider {
+    width: 100%;
+    height: 500px;
+    object-fit: cover;
+}
+
+label.error {
+    color:red;
+    font-family: sans-serif;
+}
+
+input.error, textarea.error {
+    border:2px solid red !important;
+}
+
+
+.contenedor_formulario {
+    width: 90%;
+    min-height: 400px;
+    background-color:#ccc;
+    margin:auto;
+    height: auto;
+}
+
+.en_linea {
+    display: inline;
+}
+
+.rojo {
+    color:red;
+}
+
+header {
+    width: 100%;
+    height: 80px;
+    background-color:#333;
+    /*padding: 10px;*/
+    transition: all 0.5s;
+}
+
+
+/*
+h1 {
+    color:white;
+}
+*/
+/*
+header > h1 {
+    color: white;
+}
+*/
+
+/*Una clase de CSS es un conjunto de estilos reutilizables*/
+
+.texto_blanco {
+    color:white;
+}
+
+#principal {
+    width: 100%;
+    min-height: 500px;
+    height: auto;
+}
+
+footer {
+    width: 100%;
+    height: 120px;
+    background-color:#999;
+}
+
+nav {
+    width: auto;
+    float:right;
+}
+
+nav > ul > li { 
+    display: inline-block;
+    margin-left:30px;
+    
+    padding:30px 20px;
+    transition: all 0.5s;
+}
+
+nav > ul > li:hover {
+    background-color:black;
+}
+
+nav > ul > li > a {
+    color:white;
+    text-decoration: none;
+}
+
+.logo {
+    width: 70px;
+}
+
+
+.contenedor_peliculas {
+    width: 90%;
+    background-color: #ccc;
+    min-height: 400px;
+    height: auto;
+    margin:auto;
+}
+
+.pelicula {
+    width: 200px;
+    height: 350px;
+    border-top: 15px solid #b5121c;
+    border-radius: 5px;
+    display: inline-block;
+    margin-top: 30px;
+    margin-left:30px;
+    overflow: hidden;
+}
+
+.pelicula > img {
+    width: 200px;
+    transition: all 0.5s;
+}
+
+.pelicula > img:hover {
+    transform: scale(1.1);
+}
+
+.pelicula > a {
+    background-color:#b5121c;
+    color:white;
+    text-decoration: none;
+    display: block;
+    padding:10px 55px;
+    border-radius: 0 0 5px 5px;
+    margin-top: 10px;
+}
+
+.titulo_contenedor_pelicula {
+    color:#444343;
+    text-align: center;
+}
+
+footer > div {
+    width: 25%;
+    float:left;
+}
+
+footer li {
+    list-style: none;
+}
+
+.logo_footer {
+    width: 100px;
+    margin:auto;
+    display: block;
+}
+
+.hide_on_mobile {
+    display: block;
+}
+
+.hide_on_desktop {
+    display: none;
+}
+
+.contenedor_contacto {
+    width: 90%;
+    min-height: 400px;
+    height: auto;
+    background-color:#ccc;
+    margin:auto;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.contenedor_contacto > div {
+    width: 50%;
+}
+
+label {
+    display: block;
+}
+
+input[type=text], input[type=email], textarea {
+    border: 2px solid silver;
+    padding:5px 0;
+    border-radius: 6px;
+}
+
+.btn {
+    padding: 5px;
+    border:2px solid silver;
+    border-radius: 15px;
+}
+
+.mapa {
+    width: 90%;
+    height: 300px;
+}
+
+
+/*MEDIA QUERY PARA TABLETS*/
+
+@media (max-width: 1024px) {
+
+    @keyframes animacion_pelicula_tablet {
+        0% {
+            transform: scale(0.1);
+        }
+
+        75%{
+            transform: scale(1.1);
+        }
+
+        100% {
+            transform: scale(1)
+        }
+    }
+
+    .pelicula {
+        width: 40%;
+        height: 100%;
+        margin-left:7%;
+        animation:animacion_pelicula_tablet;
+        animation-duration: 2s;
+    }
+
+    .pelicula > img {
+        width: 100%;
+    } 
+
+    .pelicula > a {
+        padding: 10px 0;
+        text-align: center;
+    }
+}
+
+/*MEDIA QUERY PARA TELEFONOS*/
+@media (max-width:767px) {
+
+    .contenedor_contacto {
+        flex-direction: column;
+    }
+
+    .contenedor_contacto > div {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .hide_on_mobile {
+        display: none;
+    }
+
+    .hide_on_desktop {
+        display: block;
+    }
+
+
+    nav {
+        float:none;
+    }
+
+    header {
+        height: auto;
+    }
+
+    nav > ul > li {
+        display: block;
+        margin:0;
+        text-align: center;
+    }
+
+    .logo {
+        margin:auto;
+        display: block;
+    }
+
+    .pelicula {
+        display: block;
+        width: 80%;
+        height: auto;
+        margin:20px auto;
+    }
+
+    @keyframes animacion_pelicula_left {
+        0% {
+            margin-left:-500px;
+            opacity: 0.1;
+        }
+        
+        100% {
+            margin-left:0;
+            opacity: 1;
+        }
+    }
+
+    @keyframes animacion_pelicula_right {
+        0% {
+            margin-left:500px;
+            opacity: 0.1;
+        }
+        
+        100% {
+            margin-left:0;
+            opacity: 1;
+        }
+    }   
+
+    @keyframes animacion_ver_horarios {
+        0% {
+            opacity: 0;
+        }
+
+        75% {
+            opacity: 0;
+        }
+
+        100% {
+            opacity: 1;
+        }
+    }
+
+
+
+
+    /*impares*/
+    .pelicula:nth-child(odd) > img {
+        width: 100%;
+        animation: animacion_pelicula_left;
+        animation-duration: 2s;
+    }
+    /*pares*/
+    .pelicula:nth-child(even) > img {
+        width: 100%;
+        animation: animacion_pelicula_right;
+        animation-duration:2s;
+    }
+
+
+
+    .pelicula > a {
+        padding: 10px 0;
+        text-align: center;
+        animation: animacion_ver_horarios;
+        animation-duration: 2s;
+    }
+
+    .logo_footer_mobile {
+        width: 100px;
+        margin:auto;
+        display: block;
+    }
+
+}
+
+
+

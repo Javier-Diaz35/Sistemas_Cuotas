@@ -1,0 +1,163 @@
+{% extends 'Sistema/base.html' %}
+
+
+{% block contenido %}
+
+<form>
+    <div class="form-row">
+        <div class="form-group col-md-3">
+            <label for="seleccionCurso">Curso</label>
+            <select id="seleccionCurso" class="form-control">
+                <option selected>Curso...</option>
+                <option>1° A</option>
+                <option>1° B</option>
+                <option>2° A</option>
+            </select>
+        </div>
+        <div class="form-group col-md-2">
+        </div>
+        <div class="form-group col-md-5">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">DNI</th>
+                        <th scope="col">Nombre</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">42051037</th>
+                        <th scope="row">Javier Diaz</th>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-3">
+            <label for="seleccionAlumno">Alumno</label>
+            <select id="seleccionAlumno" class="form-control">
+                <option selected>Alumno...</option>
+                <option>Javier Diaz</option>
+                <option>Cesar Castellaro</option>
+                <option>Agustin Centamori</option>
+            </select>
+        </div>
+        <div class="form-group col-md-2">
+        </div>
+        <div class="form-group col-md-5">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">Telefono</th>
+                        <th scope="col">Matricula</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">3546435666</th>
+                        <th scope="row">0000001</th>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <h4>Seleccione un Mes</h4>
+    </br>
+    <div class="form-row">
+        </br>
+        <div class="form-group col-md-2">
+            <label class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input">
+                <span class="custom-control-label">Marzo</span>
+            </label>
+        </div>
+        <div class="form-group col-md-2">
+            <label class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input">
+                <span class="custom-control-label">Abril</span>
+            </label>
+        </div>
+        <div class="form-group col-md-2">
+            <label class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input">
+                <span class="custom-control-label">Mayo</span>
+            </label>
+        </div>
+        <div class="form-group col-md-2">
+            <label class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input">
+                <span class="custom-control-label">Junio</span>
+            </label>
+        </div>
+        <div class="form-group col-md-2">
+            <label class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input">
+                <span class="custom-control-label">Julio</span>
+            </label>
+        </div>
+        <div class="form-group col-md-2">
+            <label class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input">
+                <span class="custom-control-label">Agosto</span>
+            </label>
+        </div>
+        <div class="form-group col-md-2">
+            <label class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input">
+                <span class="custom-control-label">Septiembre</span>
+            </label>
+        </div>
+        <div class="form-group col-md-2">
+            <label class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input">
+                <span class="custom-control-label">Octubre</span>
+            </label>
+        </div>
+        <div class="form-group col-md-2">
+            <label class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input">
+                <span class="custom-control-label">Noviembre</span>
+            </label>
+        </div>
+        <div class="form-group col-md-2">
+            <label class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input">
+                <span class="custom-control-label">Diciembre</span>
+            </label>
+        </div>
+    </div>
+    </br>
+    <h4>Total a Pagar $0000.00</h4>
+    </br>
+    </br>
+    <div class="form-row">
+        <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Aviso de Pago</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Se acredito el cobro de la(s) cuota(s) - - para el alumno - - por el monto de - -
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary">Imprimir Recibo</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
+            Guardar
+        </button>
+    </div>
+</form>
+
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'Sistema/base.html' %}
+
+{% block contenido %}
+
+<h2>Listado de Cursos</h2>
+<a href="{% url 'nuevo_curso' %}"><button >Nuevo Curso</button></a>
+<table>
+    <tr>
+        <th>Nombre y division</th>
+    </tr>
+
+
+    {% for c in cursos %} 
+
+    <tr>
+        <td>{{ c.nombre }}</td>
+        <td>{{ c.division }}</td>
+        <td><a href="{% url 'modificar_curso' c.pk %}">Modificar</a></td>
+        <td><a href="#" onclick="return confirm('Esta Seguro?')">Eliminar </a></td>
+    </tr>
+
+    {% endfor %}
+
+</table>
+
+
+{% endblock %}
