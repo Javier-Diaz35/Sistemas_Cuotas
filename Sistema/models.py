@@ -17,6 +17,8 @@ class Alumno(models.Model):
     matricula = models.CharField(max_length=20, unique=True, null=True)
     curso = models.ForeignKey(Curso, on_delete=models.CASCADE, null=False, blank=False)
     oculto = models.BooleanField(default=False)
+    beca = models.BooleanField(default=False)
+    mediaBeca = models.BooleanField(default=False)
 
     def __str__(self):
         return self.apellido + ' ' + self.nombre
