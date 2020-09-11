@@ -6,12 +6,12 @@
 <form>
     <div class="form-row">
         <div class="form-group col-md-3">
-            <label for="seleccionCurso">Curso</label>
-            <select id="seleccionCurso" class="form-control">
-                <option selected>Curso...</option>
-                <option>1° A</option>
-                <option>1° B</option>
-                <option>2° A</option>
+            <label for="curso">{{ form.curso.label }}</label>
+            <select name="{{ form.curso.label }}" id="{{ form.curso.label }}">
+                <option value='0'>Seleccione un curso</option>
+                    {% for opciones in form.curso %}
+                        {{opciones}}
+                        {% endfor %}
             </select>
         </div>
         <div class="form-group col-md-2">

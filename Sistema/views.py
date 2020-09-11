@@ -27,6 +27,8 @@ def nuevo_alumno(request):
         if formulario.is_valid():  
             formulario.save()
             data['mensaje'] = "Guardado Correctamente"
+        else:
+            data['mensaje'] = formulario.errors
     return render(request, 'Sistema/nuevo_alumno.html', data)
 
 def modificar_alumno(request, pk):

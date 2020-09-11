@@ -30,23 +30,26 @@
         <div class="col-sm-2">
         </div>
         <div class="col-sm-3">
-            <label for="curso">{{ form.curso.label }}</label>
-            <select name="{{ form.curso.label }}" id="{{ form.curso.label }}">
-                <option value='0'>Seleccione un curso</option>
-                    {% for opciones in form.curso %}
-                        {{opciones}}
-                        {% endfor %}
-            </select>
+            <label for="dni">{{ form.dni.label }}</label>
+            {{ form.dni }}
         </div>
     </div>
+    </br>
     <div class="form-row">
         <div class="col-sm-2">
             <label for="matricula">{{ form.matricula.label }}</label>
             {{ form.matricula }}
         </div>
+        <div class="col-sm-2">
+
+        </div>
+        <div class="col-sm-3">
+            <label for="curso">{{ form.curso.label }}</label>
+            {{ form.curso }}
+        </div>
     </div>
     {{ mensaje }}
-</br>
+    </br>
     <button type="submit" class="btn btn-primary">Guardar</button>
     <a class="btn btn-danger" href="{% url 'listado_alumnos' %}" role="button">Cancelar</a>
 
