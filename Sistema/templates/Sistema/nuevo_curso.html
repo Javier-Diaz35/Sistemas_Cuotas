@@ -7,16 +7,27 @@
 
 <form method="POST">
     {% csrf_token %}
-    <table>
-        {{ form.as_table }}
-    </table>
+    
+    <div class="form-row">
+        <div class="col-sm-2">
+            <label for="nombre">{{ form.nombre.label }}</label>
+            {{ form.nombre }}
+        </div>
+        <div class="col-sm-2">
 
-    <input type="reset" value="Limpiar">
-    <input type="submit" value="Guardar">
+        </div>
+        <div class="col-sm-2">
+            <label for="division">{{ form.division.label }}</label>
+            {{ form.division }}
+        </div>
+    </div>
+    </br>
+    </br>
+    <button type="submit" class="btn btn-primary">Guardar</button>
+    <a class="btn btn-danger" href="{% url 'listado_curso' %}" role="button">Cancelar</a>
     
 
 </form>
-<a href="{% url 'listado_curso' %}"><button>Volver</button></a>
 {{ mensaje }}
 
 {% endblock %}
