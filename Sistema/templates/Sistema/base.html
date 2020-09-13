@@ -55,19 +55,9 @@
                             <i class="align-middle" data-feather="user"></i> <span class="align-middle">Alumnos</span>
                         </a>
                         <ul id="ui" class="sidebar-dropdown list-unstyled collapse " data-parent="#sidebar">
-                            <li class="sidebar-item"><a class="sidebar-link" href="{% url 'listado_alumnos' %}">1° A</a>
+                            <li class="sidebar-item"><a class="sidebar-link" href="{% url 'listado_alumnos' %}">Listado de Alumnos</a>
                             </li>
-                            <li class="sidebar-item"><a class="sidebar-link" href="alumnos-1B.html">1° B</a></li>
-                            <li class="sidebar-item"><a class="sidebar-link" href="alumnos-2A.html">2° A</a></li>
-                            <li class="sidebar-item"><a class="sidebar-link" href="alumnos-2B.html">2° B</a></li>
-                            <li class="sidebar-item"><a class="sidebar-link" href="alumnos-3A.html">3° A</a></li>
-                            <li class="sidebar-item"><a class="sidebar-link" href="alumnos-3B.html">3° B</a></li>
-                            <li class="sidebar-item"><a class="sidebar-link" href="alumnos-4E.html">4° Eco</a></li>
-                            <li class="sidebar-item"><a class="sidebar-link" href="alumnos-4I.html">4° Info</a></li>
-                            <li class="sidebar-item"><a class="sidebar-link" href="alumnos-5E.html">5° Eco</a></li>
-                            <li class="sidebar-item"><a class="sidebar-link" href="alumnos-5I.html">5° Info</a></li>
-                            <li class="sidebar-item"><a class="sidebar-link" href="alumnos-6E.html">6° Eco</a></li>
-                            <li class="sidebar-item"><a class="sidebar-link" href="alumnos-6I.html">6° Info</a></li>
+                            <li class="sidebar-item"><a class="sidebar-link" href="{% url 'listado_alumnos_oculto' %}">Dados de Baja</a></li>
                         </ul>
                     </li>
                     <br />
@@ -85,7 +75,7 @@
                         </a>
                         <ul id="admin" class="sidebar-dropdown list-unstyled collapse " data-parent="#sidebar">
                             <li class="sidebar-item active"><a class="sidebar-link" href="cursos.html">Cursos</a></li>
-                            <li class="sidebar-item"><a class="sidebar-link" href="cuotas.html">Cuotas</a></li>
+                            <li class="sidebar-item"><a class="sidebar-link" href="{% url 'listado_cuota' %}">Cuotas</a></li>
                         </ul>
                     </li>
                     <li class="sidebar-item">

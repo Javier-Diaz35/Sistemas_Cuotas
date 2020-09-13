@@ -2,20 +2,38 @@
 
 
 {% block contenido %}
-
+</br>
 <h2>Nueva Cuota</h2>
 
 <form method="POST">
     {% csrf_token %}
-    <table>
-        {{ form.as_table }}
-    </table>
-    
-    <input type="reset" value="Limpiar">
-    <input type="submit" value="Guardar">
+    <div class="form-row">
+        <div class="col-sm-2">
+            <label for="alumno">{{ form.alumno.label }}</label>
+            {{ form.alumno }}
+        </div>
+        </br>
+        <div class="col-sm-1">
+        </div>
+        <div class="col-sm-2">
+            <label for="monto">{{ form.monto.label }}</label>
+            {{ form.monto }}
+        </div>
+        </br>
+        <div class="col-sm-1">
+        </div>
+        <div class="col-sm-2">
+            <label for="numeromes">{{ form.numeromes.label }}</label>
+            {{ form.numeromes }}
+        </div>
+    </div>
+    </br>
+    </br>
+    <a class="btn btn-primary" href="#" role="button" type="submit">Guardar</a>
+    <button type="reset" class="btn btn-secondary">Limpiar</button>
+    <a class="btn btn-danger" href="{% url 'listado_cuota' %}" role="button">Volver</a>
 
 </form>
-<a href="{% url 'listado_cuota' %}"><button>Volver</button></a>
 {{ mensaje }}
 
 {% endblock %}

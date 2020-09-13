@@ -3,35 +3,57 @@
 {% block contenido %}
 
 <h2>Listado de Alumnos</h2>
-<a class="btn btn-secondary" href="{% url 'nuevo_alumno' %}" role="button">Nuevo Alumno</a>
 </br>
-<table class="table table-hover my-0">
-    <thead>
-        <tr>
-            <th>Nombre y Apellido</th>
-            <th>D.N.I</th>
-            <th>Curso</th>
-            <th>Celualar</th>
-            <th>Matricula</th>
-            <th colspan="2">Opciones</th>
-        </tr>
-    </thead>
+<a class="btn btn-secondary btn-sm" href="{% url 'nuevo_alumno' %}" role="button">Nuevo Alumno</a>
+<div id="botones" class="form-row">
+    <br/>
+    <div class="col-sm-5">
+        Buscar un Alumno <input id="buscar" type="search">
+    </div>
+    <div class="col-sm-4">
+        Filtrar por Curso <select id="filtrosalumno">
+            <option selected>Curso</option>
+            <option>Primero A</option>
+        </select>
+    </div>
+    <div class="col-sm-3">
+        Ordenar por <select id="filtrosalumno">
+            <option selected>------</option>
+            <option>A-Z</option>
+            <option>Z-A</option>
+        </select>
+    </div>
+</div>
+<div id="tabla">
+    <br />
+    <br />
+    <table class="table table-hover my-0">
+        <thead>
+            <tr>
+                <th>Nombre y Apellido</th>
+                <th>D.N.I</th>
+                <th>Curso</th>
+                <th>Celular</th>
+                <th>Matricula</th>
+                <th colspan="2">Opciones</th>
+            </tr>
+        </thead>
 
 
-    {% for a in alumnos %}
-    <tbody>
-        <tr>
-            <td>{{ a.nombre }} {{ a.apellido }}</td>
-            <td>{{ a.dni }}</td>
-            <td>{{ a.curso }}</td>
-            <td>{{ a.celular }}</td>
-            <td>{{ a.matricula }}</td>
-            <td class="table-action"><a href="{% url 'modificar_alumno' a.pk %}">Modificar</a></td>
-            <td><a href="{% url 'ocultar_alumno' a.pk %}" onclick="return confirm('Esta Seguro?')">Dar de Baja </a></td>
-        </tr>
-    </tbody>
-    {% endfor %}
+        {% for a in alumnos %}
+        <tbody>
+            <tr>
+                <td>{{ a.nombre }} {{ a.apellido }}</td>
+                <td>{{ a.dni }}</td>
+                <td>{{ a.curso }}</td>
+                <td>{{ a.celular }}</td>
+                <td>{{ a.matricula }}</td>
+                <td class="table-action"><a href="{% url 'modificar_alumno' a.pk %}">Modificar</a></td>
+                <td class="table-action"><a href="{% url 'ocultar_alumno' a.pk %}" onclick="return confirm('Esta Seguro?')">Dar de Baja </a></td>
+            </tr>
+        </tbody>
+        {% endfor %}
 
-</table>
-
+    </table>
+</div>
 {% endblock %}

@@ -53,6 +53,13 @@ def ocultar_alumno(request, pk):
 
     return redirect("listado_alumnos")
 
+def desocultar_alumno(request, pk):
+    alumno = Alumno.objects.get(pk = pk)
+    alumno.oculto = False
+    alumno.save()
+
+    return redirect("listado_alumnos")
+
 def listado_alumnos_oculto(request):
     alumnos = Alumno.objects.filter(oculto=True)
     data = {

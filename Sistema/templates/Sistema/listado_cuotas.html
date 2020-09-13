@@ -1,30 +1,35 @@
 {% extends 'Sistema/base.html' %}
 
 {% block contenido %}
+<h2>Listado de Cuotas</h2>
+<a class="btn btn-secondary btn-sm" href="{% url 'nueva_cuota' %}" role="button">Nueva Cuota</a></br>
+</br>
+Busca un Alumno <input id="buscar" type="search">
+<div id="tabla">
+    <br/>
+    <table class="table table-hover my-0">
+        <tr>
+            <th>Alumno</th>
+            <th>Monto</th>
+            <th>Mes</th>
+            <th colspan="2">Opciones</th>
+        </tr>
 
-<h2>Listado de Cursos</h2>
-<a href="{% url 'nueva_cuota' %}"><button >Nueva Cuota</button></a>
-<table>
-    <tr>
-        <th>Alumno</th>
-        <th>Monto</th>
-        <th>Mes</th>
-    </tr>
 
+        {% for c in cuotas %}
 
-    {% for c in cuotas %} 
+        <tr>
+            <td>{{ c.alumno }}</td>
+            <td>{{ c.monto }}</td>
+            <td>{{ c.numeromes }}</td>
+            <td class="table-action"><a href="{% url 'modificar_cuota' c.pk %}">Modificar</a></td>
+            <td class="table-action"><a href="#" onclick="return confirm('Esta Seguro?')">Eliminar </a></td>
+        </tr>
 
-    <tr>
-        <td>{{ c.alumno }}</td>
-        <td>{{ c.monto }}</td>
-        <td>{{ c.numeromes }}</td>
-        <td><a href="{% url 'modificar_cuota' c.pk %}">Modificar</a></td>
-        <td><a href="#" onclick="return confirm('Esta Seguro?')">Eliminar </a></td>
-    </tr>
+        {% endfor %}
 
-    {% endfor %}
-
-</table>
+    </table>
+</div>
 
 
 {% endblock %}

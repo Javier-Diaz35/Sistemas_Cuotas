@@ -2,33 +2,56 @@
 
 {% block contenido %}
 
-<h2>Listado de Alumnos Ocultos</h2>
+<h2>Listado de Alumnos Dados de Baja</h2>
+<br/>
+<div id="botones" class="form-row">
+    <br />
+    <div class="col-sm-5">
+        Buscar un Alumno <input id="buscar" type="search">
+    </div>
+    <div class="col-sm-4">
+        Filtrar por Curso <select id="filtrosalumno">
+            <option selected>Curso</option>
+            <option>Primero A</option>
+        </select>
+    </div>
+    <div class="col-sm-3">
+        Ordenar por <select id="filtrosalumno">
+            <option selected>------</option>
+            <option>A-Z</option>
+            <option>Z-A</option>
+        </select>
+    </div>
+</div>
+<div>
+    <br />
+    <table class="table table-hover my-0">
+        <tr>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>D.N.I</th>
+            <th>Curso</th>
+            <th>Celular</th>
+            <th>Matricula</th>
+            <th>Opciones</th>
+        </tr>
 
-<table>
-    <tr>
-        <th>Nombre</th>
-        <th>Apellido</th>
-        <th>D.N.I</th>
-        <th>Curso</th>
-        <th>Celualar</th>
-        <th>Matricula</th>
-    </tr>
 
+        {% for a in alumnos %}
 
-    {% for a in alumnos %}
+        <tr>
+            <td>{{ a.nombre }}</td>
+            <td>{{ a.apellido }}</td>
+            <td>{{ a.dni }}</td>
+            <td>{{ a.curso }}</td>
+            <td>{{ a.celular }}</td>
+            <td>{{ a.matricula }}</td>
+            <td class="table-action"><a href="{% url 'desocultar_alumno' a.pk %}" onclick="return confirm('Esta Seguro?')">Deshacer </a></tdDeshacer</a></td>
+        </tr>
 
-    <tr>
-        <td>{{ a.nombre }}</td>
-        <td>{{ a.apellido }}</td>
-        <td>{{ a.dni }}</td>
-        <td>{{ a.curso }}</td>
-        <td>{{ a.celular }}</td>
-        <td>{{ a.matricula }}</td>
-    </tr>
+        {% endfor %}
 
-    {% endfor %}
-
-</table>
-
+    </table>
+</div>
 
 {% endblock %}

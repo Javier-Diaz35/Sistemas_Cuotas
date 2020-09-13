@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import home, listado_alumno, nuevo_alumno, modificar_alumno, ocultar_alumno,listado_alumnos_oculto, listado_curso, nuevo_curso, modificar_curso, nueva_cuota, listado_cuota, modificar_cuota, listado_pago, nuevo_pago, ultimos_cobros, historial
+from .views import home, listado_alumno, nuevo_alumno, modificar_alumno, ocultar_alumno,listado_alumnos_oculto, listado_curso, nuevo_curso, modificar_curso, nueva_cuota, listado_cuota, modificar_cuota, listado_pago, nuevo_pago, ultimos_cobros, historial, desocultar_alumno
 
 urlpatterns = [
     path('', home, name="home"),
@@ -9,6 +9,7 @@ urlpatterns = [
     path('modificar-alumno/<int:pk>', modificar_alumno, name="modificar_alumno"),
     path('ocultar-alumno/<int:pk>', ocultar_alumno, name="ocultar_alumno"),
     path('listado-alumno-oculto', listado_alumnos_oculto, name="listado_alumnos_oculto"),
+    path('desocultar-alumno/<int:pk>', desocultar_alumno, name="desocultar_alumno"),
     #Cursos
     path('listado-curso', listado_curso, name="listado_curso"),
     path('nuevo-curso', nuevo_curso, name="nuevo_curso"),
