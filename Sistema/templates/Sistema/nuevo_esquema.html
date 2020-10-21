@@ -1,0 +1,40 @@
+{% extends 'Sistema/base.html' %}
+
+
+{% block contenido %}
+
+<h2>Nuevo Esquema</h2>
+
+<form method="POST">
+    {% csrf_token %}
+    
+    <div class="form-row">
+        <div class="col-sm-2">
+            <label for="year">{{ form.year.label }}</label>
+            {{ form.year }}
+        </div>
+        <div class="col-sm-2">
+
+        </div>
+        <div class="col-sm-2">
+            <label for="monto">{{ form.monto.label }}</label>
+            {{ form.monto }}
+        </div>
+        <div class="col-sm-2">
+
+        </div>
+        <div class="col-sm-2">
+            <label for="numeromes">{{ form.numeromes.label }}</label>
+            {{ form.numeromes }}
+        </div>
+    </div>
+    </br>
+    </br>
+    <button type="submit" class="btn btn-primary">Guardar</button>
+    <a class="btn btn-danger" href="{% url 'listado_esquema_cuota' %}" role="button">Cancelar</a>
+    
+
+</form>
+{{ mensaje }}
+
+{% endblock %}

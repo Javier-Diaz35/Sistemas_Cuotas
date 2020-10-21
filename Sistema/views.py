@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
-from .models import Alumno, Curso, Cuota, Pago
-from .forms import AlumnoForm, CursoForm, CuotaForm, PagoForm
+from .models import Alumno, Curso, Cuota, Esquema_Cuota
+from .forms import AlumnoForm, CursoForm, CuotaForm, EsquemaForm
+from django.core.exceptions import ObjectDoesNotExist
+import datetime
 
 
 def home(request):
@@ -9,8 +11,10 @@ def home(request):
 
 
 def listado_alumno(request):
-    alumnos = Alumno.objects.filter(oculto=False)
+    alumnos = Alumno.objects.filter(oculto=False).order_by('apellido')
+    cursos = Curso.objects.all()
     data = {
+        'cursos':cursos,
         'alumnos':alumnos     
         }
     return render(request, 'Sistema/listado_alumnos.html', data)
@@ -25,7 +29,8 @@ def nuevo_alumno(request):
         formulario = AlumnoForm(request.POST)
         print(formulario)
         if formulario.is_valid():  
-            formulario.save()
+            nuevoalumno = formulario.save()
+            Cuota.verificar_cuotas(nuevoalumno)
             data['mensaje'] = "Guardado Correctamente"
         else:
             data['mensaje'] = formulario.errors
@@ -62,9 +67,17 @@ def desocultar_alumno(request, pk):
 
 def listado_alumnos_oculto(request):
     alumnos = Alumno.objects.filter(oculto=True)
+    orden = request.POST['ordenar']
     data = {
-        'alumnos':alumnos     
+        'alumnos':alumnos
         }
+    if request.method == 'POST':
+        if request.POST.get('ordenar'):
+            if orden == 1:
+                alumnos = Alumno.objects.filter(oculto=True).order_by('apellido')
+            if orden == 2:
+                alumnos = Alumno.objects.filter(oculto=True).order_by('-apellido')
+
     return render(request, 'Sistema/alumnos_ocultos.html', data)
 
 def listado_curso(request):
@@ -152,22 +165,56 @@ def ultimos_cobros(request):
     return render(request, 'Sistema/ultimos_cobros.html', data)
 
 def nuevo_pago(request):
+    cursos = Curso.objects.all()
     data = {
-        'form':PagoForm()
+        'cursos':cursos,
+        'form':CuotaForm()
 
     }
     if request.method == 'POST':
-        formulario = PagoForm(request.POST)
-        print(formulario)
-        if formulario.is_valid():  
-            formulario.save()
-            data['mensaje'] = "Guardado Correctamente"
+        idcurso = request.POST['seleccionCurso']
+        alumnos = Alumno.objects.filter(curso = idcurso)
+        cuotas = Cuota.objects.filter(alumno = alumnos)
+        #print(alumnos)
+        data['cursoseleccionado'] = True
+        data['cursoid'] = int(idcurso)
+        data['alumnos'] = alumnos
+        data['cuotas'] = cuotas
+        try: 
+            idalumno = request.POST.get('seleccionAlumno', 0)
+            if idalumno != 0:
+                data['alumoseleccionado'] = True
+                data['alumnoid'] = int(idalumno)
+                idcuota = request.POST.get('seleccionMes', 0)
+                if idcuota != 0:
+                    data['cuotaseleccionado'] = True
+                    data['cuotaid'] = int(idcuota)
+                    
+        except ObjectDoesNotExist:
+            pass
+                #formulario = PagoForm(request.POST)
+                #if formulario.is_valid():
+                #    formulario.save()
+                #    data['mensaje'] = "Guardado Correctamente"
+
     return render(request, 'Sistema/nuevo_pago.html', data)
 
 
-def historial(request):
-    pagos = Pago.objects.all()
+def list_esquema_cuota(request):
+    esquema = Esquema_Cuota.objects.all()
     data = {
-        'pagos':pagos
+        'esquemas':esquema
         }
-    return render(request, 'Sistema/historial.html', data)
+    return render(request, 'Sistema/list_esquema_cuota.html', data)
+
+def nuevo_esquema(request):
+    data = {
+        'form':EsquemaForm()
+
+    }
+    if request.method == 'POST':
+        formulario = EsquemaForm(request.POST)
+        if formulario.is_valid():  
+            formulario.save()
+            data['mensaje'] = "Guardado Correctamente"
+    return render(request, 'Sistema/nuevo_esquema.html', data)

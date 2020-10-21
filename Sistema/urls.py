@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import home, listado_alumno, nuevo_alumno, modificar_alumno, ocultar_alumno,listado_alumnos_oculto, listado_curso, nuevo_curso, modificar_curso, nueva_cuota, listado_cuota, modificar_cuota, listado_pago, nuevo_pago, ultimos_cobros, historial, desocultar_alumno
+from .views import home, listado_alumno, nuevo_alumno, modificar_alumno, ocultar_alumno,listado_alumnos_oculto, listado_curso, nuevo_curso, modificar_curso, nueva_cuota, listado_cuota, modificar_cuota, listado_pago, nuevo_pago, ultimos_cobros, desocultar_alumno, list_esquema_cuota, nuevo_esquema
 
 urlpatterns = [
     path('', home, name="home"),
@@ -22,5 +22,7 @@ urlpatterns = [
     path('listado-pago', listado_pago, name="listado_pago"),
     path('nuevo-pago', nuevo_pago, name="nuevo_pago"),
     path('ultimos-cobros', ultimos_cobros, name="ultimos_cobros"),
-    path('historial', historial, name="historial"),
+    #Esquema
+    path('list-esquema-cuota', list_esquema_cuota, name="listado_esquema_cuota"),
+    path('nuevo-esquema', nuevo_esquema, name="nuevo_esquema"),
 ]

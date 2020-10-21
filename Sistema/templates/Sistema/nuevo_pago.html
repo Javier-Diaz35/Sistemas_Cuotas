@@ -4,19 +4,90 @@
 {% block contenido %}
 
 <h2>Nuevo Pago</h2>
-
+<br/>
 <form method="POST">
     {% csrf_token %}
+    <div class="form-row">
+        <div class="col-sm-3">
+            Seleccione un Curso</br>
+            <select class="form-control" name="seleccionCurso" id="seleccionCurso" onchange="this.form.submit()">
+                {% if not cursoseleccionado %}
 
+                <option selected>--------------------</option>
+
+                {% endif %}
+
+                {% for curso in cursos %}
+
+
+                {% if cursoid ==  curso.pk %}
+
+                <option selected value="{{ curso.pk }}">{{ curso.nombre }} {{ curso.division }}</option>
+
+                {% else %}
+
+                <option value="{{ curso.pk }}">{{ curso.nombre }} {{ curso.division }}</option>
+
+                {% endif %}
+
+                {% endfor %}
+
+            </select>
+        </div>
+        </br>
+        <div class="col-sm-3">
+            Seleccione un Alumno</br>
+            <select class="form-control" name="seleccionAlumno" id="seleccionAlumno" onchange="this.form.submit()">
+
+                <option value="0" selected>--------------------</option>
+
+                
+                {% for alumno in alumnos %}
+
+                {% if alumnoid ==  alumno.pk %}
+
+                <option selected value="{{ alumno.pk }}">{{ alumno.nombre }} {{ alumno.apellido }}</option>
+
+                {% endif %}
+
+
+                <option value="{{ alumno.pk }}">{{ alumno.nombre }} {{ alumno.apellido }}</option>
+
+                {% endfor %}
+
+            </select>
+        </div>
+    </div>
+    </br>
+    <div id="cuotas">
+        <div class="form-row">
+            <div class="form-group col-md-2">
+                Seleccione un mes</br>
+                <select class="form-control" name="seleccionMes" id="seleccionMes" onchange="this.form.submit()">
+
+                    <option value="0" selected>--------------------</option>
     
-
-    <table>
-        {{ form.as_table }}
-    </table>
-
+                    
+                    {% for cuota in cuotas %}
+    
+                        {% if cuotaid ==  cuota.pk %}
+        
+                        <option selected value="{{ cuota.pk }}">{{ cuota.numeromes }} {{ cuota.monto }}</option>
+        
+                        {% endif %}
+        
+        
+                        <option value="{{ cuota.pk }}">{{ cuota.numeromes }} {{ cuota.monto }}</option>
+        
+                    {% endfor %}
+    
+                </select>
+            </div>
+        </div>
+    </div>
     <input type="reset" value="Limpiar">
     <input type="submit" value="Guardar">
-    
+
 
 </form>
 <a href="{% url 'listado_pago' %}"><button>Volver</button></a>

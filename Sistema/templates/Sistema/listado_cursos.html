@@ -18,8 +18,10 @@
 
         <tr>
             <td>{{ c.nombre }} {{ c.division }}</td>
-            <td class="table-action"><a href="{% url 'modificar_curso' c.pk %}">Modificar</a></td>
-            <td class="table-action"><a href="#" onclick="return confirm('Esta Seguro?')">Eliminar </a></td>
+            <td class="table-action">
+                <a href="{% url 'modificar_curso' c.pk %}" class="btn btn-link" title="Editar"><i data-feather="edit-3"></i></a>
+                <a href="#" onclick="return confirm('Esta Seguro?')" class="btn btn-link" title="Dar de Baja"><i data-feather="trash"></i></a>
+            </td>
         </tr>
 
         {% endfor %}

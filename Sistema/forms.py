@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from .models import Alumno, Curso, Cuota, Pago
+from .models import Alumno, Curso, Cuota, Esquema_Cuota
 
 class AlumnoForm(ModelForm):
 
@@ -20,9 +20,9 @@ class CuotaForm(ModelForm):
         model = Cuota
         fields = ['alumno', 'monto', 'numeromes']
 
-class PagoForm(ModelForm):
+class EsquemaForm(ModelForm):
 
-    
     class Meta:
-        model = Pago
-        fields = ['alumno', 'cuotaEstablecida']
+        model = Esquema_Cuota
+        fields = ['year', 'monto', 'numeromes']
+
