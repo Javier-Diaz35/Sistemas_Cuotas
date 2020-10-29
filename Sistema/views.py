@@ -3,6 +3,7 @@ from .models import Alumno, Curso, Cuota, Esquema_Cuota
 from .forms import AlumnoForm, CursoForm, CuotaForm, EsquemaForm
 from django.core.exceptions import ObjectDoesNotExist
 import datetime
+from django.db.models import Q
 
 
 def home(request):
@@ -13,10 +14,36 @@ def home(request):
 def listado_alumno(request):
     alumnos = Alumno.objects.filter(oculto=False).order_by('apellido')
     cursos = Curso.objects.all()
+    queryset = request.GET.get('buscar')
+    if queryset:
+        alumnos = Alumno.objects.filter(
+            
+            Q(nombre__icontains = queryset) | 
+            Q(apellido__icontains = queryset)
+            
+            ).distinct()
+
     data = {
         'cursos':cursos,
         'alumnos':alumnos     
         }
+
+    if request.method == 'POST':
+        orden = request.POST['ordenar']
+        data['ordenseleccionado'] = True
+        if orden != 0:
+            if orden == '1':
+                alumno = Alumno.objects.filter(oculto=False).order_by('apellido')
+                data['alumnos'] = alumno
+            if orden == '2':
+                alumno = Alumno.objects.filter(oculto=False).order_by('-apellido')
+                data['alumnos'] = alumno
+        idcurso = request.POST['ordencurso']
+        if idcurso != 0:
+            alumnos = Alumno.objects.filter(curso = idcurso, oculto=False)
+            data['alumnos'] = alumnos
+            data['cursoid'] = int(idcurso)
+
     return render(request, 'Sistema/listado_alumnos.html', data)
 
 
@@ -25,6 +52,8 @@ def nuevo_alumno(request):
         'form':AlumnoForm()
 
     }
+    if request.POST.get('becasi'):
+            data['becaseleccion'] = True
     if request.method == 'POST':
         formulario = AlumnoForm(request.POST)
         print(formulario)
@@ -66,17 +95,19 @@ def desocultar_alumno(request, pk):
     return redirect("listado_alumnos")
 
 def listado_alumnos_oculto(request):
+    cursos = Curso.objects.all()
     alumnos = Alumno.objects.filter(oculto=True)
-    orden = request.POST['ordenar']
+    queryset = request.GET.get('buscar')
+    if queryset:
+        alumnos = Alumno.objects.filter(oculto=True).filter(
+            Q(nombre__icontains = queryset) | 
+            Q(apellido__icontains = queryset)
+            
+            ).distinct()
     data = {
+        'cursos':cursos,
         'alumnos':alumnos
         }
-    if request.method == 'POST':
-        if request.POST.get('ordenar'):
-            if orden == 1:
-                alumnos = Alumno.objects.filter(oculto=True).order_by('apellido')
-            if orden == 2:
-                alumnos = Alumno.objects.filter(oculto=True).order_by('-apellido')
 
     return render(request, 'Sistema/alumnos_ocultos.html', data)
 
@@ -116,7 +147,7 @@ def modificar_curso(request, pk):
     return render(request, template, data)
 
 def listado_cuota(request):
-    cuotas = Cuota.objects.all()
+    cuotas = Cuota.objects.filter(pago = True)
     data = {
         'cuotas':cuotas
         }
@@ -165,6 +196,7 @@ def ultimos_cobros(request):
     return render(request, 'Sistema/ultimos_cobros.html', data)
 
 def nuevo_pago(request):
+    #Se traen los datos de los modelos
     cursos = Curso.objects.all()
     data = {
         'cursos':cursos,
@@ -172,33 +204,60 @@ def nuevo_pago(request):
 
     }
     if request.method == 'POST':
+        #El curso seleccionado se lo guarda en una variable
+        #Encontrado el curso que se selecciono se busca el listadio de alumnos que esten en el curso seleccionado
         idcurso = request.POST['seleccionCurso']
         alumnos = Alumno.objects.filter(curso = idcurso)
-        cuotas = Cuota.objects.filter(alumno = alumnos)
-        #print(alumnos)
         data['cursoseleccionado'] = True
         data['cursoid'] = int(idcurso)
         data['alumnos'] = alumnos
-        data['cuotas'] = cuotas
-        try: 
+        try:
+            #Se obtiene el alumno que se selecciono
             idalumno = request.POST.get('seleccionAlumno', 0)
             if idalumno != 0:
+                print(idalumno)
+                #Se busca el alumno que se selecciono en el listado
+                #En caso de que el seleccionado no tenga las cuotas generadas se le generan en el momento
+                alumno = Alumno.objects.get(pk = idalumno)
+                Cuota.verificar_cuotas(alumno)
                 data['alumoseleccionado'] = True
                 data['alumnoid'] = int(idalumno)
+                #Se obtiene cuota que pertenezca al alumno que se selecciono
+                cuotas = Cuota.objects.filter(alumno = alumno, pago = False)
+                data['cuotas'] = cuotas
+                #Se obtieneel id de la cuota que se selecciono
                 idcuota = request.POST.get('seleccionMes', 0)
-                if idcuota != 0:
+                print('antes...')
+                print(idcuota)
+                if idcuota != '0':
                     data['cuotaseleccionado'] = True
                     data['cuotaid'] = int(idcuota)
-                    
+                    print('despues')
+                    print(idcuota)
+                    if request.POST.get('boton'):
+                        #En caso de que se haya seleccionado una cuota se muestra el boton
+                        #Y se hace el guardado del nuevo pago
+                        print('boton')
+                        cuotaselect = Cuota.objects.get(pk = idcuota)
+                        cuotaselect.pago = True
+                        cuotaselect.fechaPago = datetime.date.today()
+                        cuotaselect.save()
+                        data['mensaje'] = "Guardado Correctamente"
         except ObjectDoesNotExist:
             pass
-                #formulario = PagoForm(request.POST)
+                #formulario = CuotaForm(request.POST)
                 #if formulario.is_valid():
                 #    formulario.save()
                 #    data['mensaje'] = "Guardado Correctamente"
 
     return render(request, 'Sistema/nuevo_pago.html', data)
 
+def impagar_cuota(request, pk):
+    cuotas = Cuota.objects.get(pk = pk)
+    cuotas.pago = False
+    cuotas.save()
+
+    return redirect("listado_cuotas.html")
 
 def list_esquema_cuota(request):
     esquema = Esquema_Cuota.objects.all()

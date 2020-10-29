@@ -39,14 +39,15 @@ class Cuota(models.Model):
         año = datetime.date.today().year
         cuotas_del_año = Esquema_Cuota.objects.filter(year = año)
         for cuota in cuotas_del_año:
-            if not Cuota.objects.filter(year = año, alumno = verificalumno, numeromes = cuota.numeromes).exists():
-                nueva_cuota = Cuota.objects.create(alumno = verificalumno, year = año, monto = cuota.monto, numeromes = cuota.numeromes)
-                nueva_cuota.save()
-                print('cuota generada') 
-                print(cuota.numeromes)
-        print('verificando cuotas...')
-        print(verificalumno)
-        return True
+                if not Cuota.objects.filter(year = año, alumno = verificalumno, numeromes = cuota.numeromes).exists():
+                    nueva_cuota = Cuota.objects.create(alumno = verificalumno, year = año, monto = cuota.monto, numeromes = cuota.numeromes)
+                    print(verificalumno.mediaBeca)
+                    nueva_cuota.save()
+                    print('cuota generada') 
+                    print(cuota.numeromes)
+                print('verificando cuotas...')
+                print(verificalumno)
+                return True
 
     def __str__(self):
         return self.monto

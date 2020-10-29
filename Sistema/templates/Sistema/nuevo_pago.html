@@ -7,6 +7,11 @@
 <br/>
 <form method="POST">
     {% csrf_token %}
+    <div>
+        Buscar un Alumno<br />
+        <input style="width:40%" class="form-control" name="buscar" type="search" value="{{ request.GET.buscar }}" placeholder="Buscar...">
+    </div>
+    <br/>
     <div class="form-row">
         <div class="col-sm-3">
             Seleccione un Curso</br>
@@ -57,40 +62,40 @@
 
             </select>
         </div>
+        <br/>
+        <div class="form-group col-sm-3">
+            Seleccione un mes</br>
+            <select class="form-control" name="seleccionMes" id="seleccionMes" onchange="this.form.submit()">
+
+                <option value="0" selected>--------------------</option>
+
+                
+                {% for cuota in cuotas %}
+
+                    {% if cuotaid ==  cuota.pk %}
+    
+                    <option selected value="{{ cuota.pk }}">{{ cuota.numeromes }} {{ cuota.monto }}</option>
+    
+                    {% endif %}
+    
+    
+                    <option value="{{ cuota.pk }}">{{ cuota.numeromes }} {{ cuota.monto }}</option>
+    
+                {% endfor %}
+
+            </select>
+        </div>
+
     </div>
     </br>
-    <div id="cuotas">
-        <div class="form-row">
-            <div class="form-group col-md-2">
-                Seleccione un mes</br>
-                <select class="form-control" name="seleccionMes" id="seleccionMes" onchange="this.form.submit()">
 
-                    <option value="0" selected>--------------------</option>
-    
-                    
-                    {% for cuota in cuotas %}
-    
-                        {% if cuotaid ==  cuota.pk %}
-        
-                        <option selected value="{{ cuota.pk }}">{{ cuota.numeromes }} {{ cuota.monto }}</option>
-        
-                        {% endif %}
-        
-        
-                        <option value="{{ cuota.pk }}">{{ cuota.numeromes }} {{ cuota.monto }}</option>
-        
-                    {% endfor %}
-    
-                </select>
-            </div>
-        </div>
-    </div>
-    <input type="reset" value="Limpiar">
-    <input type="submit" value="Guardar">
+    {% if cuotaseleccionado == True %}
 
+        <input name="boton" type="submit" value="Guardar" class="btn btn-primary">
 
+    {% endif %}
+    <a class="btn btn-secondary" href="{% url 'listado_cuota' %}" role="button">Volver</a>
 </form>
-<a href="{% url 'listado_pago' %}"><button>Volver</button></a>
 {{ mensaje }}
 
 {% endblock %}

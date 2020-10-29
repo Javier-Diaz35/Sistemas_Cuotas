@@ -2267,6 +2267,11 @@ pre code {
 	}
 }
 
+.box .acciones {
+	display: flex;
+	margin: 30px auto 0px;
+}
+
 .table-responsive {
 	display: block;
 	width: 100%;

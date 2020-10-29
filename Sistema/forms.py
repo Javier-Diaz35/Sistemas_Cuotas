@@ -6,7 +6,7 @@ class AlumnoForm(ModelForm):
 
     class Meta:
         model = Alumno
-        fields = ['apellido', 'nombre', 'dni', 'celular', 'curso', 'matricula']
+        fields = ['apellido', 'nombre', 'dni', 'celular', 'curso', 'matricula', 'beca', 'mediaBeca']
 
 class CursoForm(ModelForm):
 

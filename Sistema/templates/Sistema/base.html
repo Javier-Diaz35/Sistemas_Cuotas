@@ -45,11 +45,9 @@
                     </li>
                     <br />
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="{% url 'nuevo_pago' %}">
-                            <i class="align-middle" data-feather="dollar-sign"></i> <span
-                                class="align-middle">Cobros</span>
+                        <a class="sidebar-link" href="{% url 'listado_cuota' %}">
+                            <i class="align-middle" data-feather="dollar-sign"></i> <span class="align-middle">Cobros</span>
                         </a>
-                    </li>
                     <br />
                     <li class="sidebar-item">
                         <a href="#ui" data-toggle="collapse" class="sidebar-link collapsed">
@@ -69,7 +67,6 @@
                         </a>
                         <ul id="admin" class="sidebar-dropdown list-unstyled collapse " data-parent="#sidebar">
                             <li class="sidebar-item"><a class="sidebar-link" href="{% url 'listado_curso' %}">Cursos</a></li>
-                            <li class="sidebar-item"><a class="sidebar-link" href="{% url 'listado_cuota' %}">Cuotas</a></li>
                             <li class="sidebar-item"><a class="sidebar-link" href="{% url 'listado_esquema_cuota' %}">Esquema Cuota</a></li>
                         </ul>
                     </li>
@@ -83,17 +80,6 @@
                     <i class="hamburger align-self-center"></i>
                 </a>
 
-                <form class="form-inline d-none d-sm-inline-block">
-                    <div class="input-group input-group-navbar">
-                        <input type="text" class="form-control" placeholder="Buscar..." aria-label="Search">
-                        <div class="input-group-append">
-                            <button class="btn" type="button">
-                                <i class="align-middle" data-feather="search"></i>
-                            </button>
-                        </div>
-                    </div>
-                </form>
-
             </nav>
             <main class="content">
                 <div class="container-fluid p-0">
@@ -106,7 +92,7 @@
                                     <div class="card-body">
                                         
                                             <div class="card">
-                                                <div id="principal">
+                                                <div id="principal" class="box">
 
                                                     {% block contenido %}
 

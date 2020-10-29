@@ -2,41 +2,72 @@
 
 {% block contenido %}
 
-<h2>Listado de Alumnos</h2>
-</br>
-<a class="btn btn-secondary btn-sm" href="{% url 'nuevo_alumno' %}" role="button">Nuevo Alumno</a>
-<div id="tabla">
+    <h2>Listado de Alumnos</h2>
+    </br>
+    <a class="btn btn-secondary btn-sm" href="{% url 'nuevo_alumno' %}" role="button">Nuevo Alumno</a> 
+    <a class="btn btn-success btn-sm" href="#" role="button">Importar de un xls</a>
     <br />
     <br />
-    <table class="table table-hover my-0">
-        <thead>
-            <tr>
-                <th>Apellido y Nombre</th>
-                <th>D.N.I</th>
-                <th>Curso</th>
-                <th>Celular</th>
-                <th>Matricula</th>
-                <th colspan="2">Opciones</th>
-            </tr>
-        </thead>
+    <div id="botones" class="form-row">
+        <br />
+        <div class="col-sm-4">
+            <form method="GET">
+                Buscar un Alumno<br />
+                <input class="form-control" name="buscar" type="search" value="{{ request.GET.buscar }}" placeholder="Buscar...">
+            </form>
+        </div>
+        <div class="col-sm-4">
+            Filtrar por Curso <select name="ordencurso" class="form-control" style="width:55%"
+                onchange="this.form.submit()">
+                {% for curso in cursos %}
+
+                {% if cursoid ==  curso.pk %}
+
+                <option selected value="{{ curso.pk }}">{{ curso.nombre }} {{ curso.division }}</option>
+
+                {% endif %}
+
+                <option value="{{ curso.pk }}">{{ curso.nombre }} {{ curso.division }}</option>
+
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div id="tabla">
+        <br />
+        <br />
+        <table class="table table-hover my-0">
+            <thead>
+                <tr>
+                    <th>Apellido y Nombre</th>
+                    <th>D.N.I</th>
+                    <th>Curso</th>
+                    <th>Celular</th>
+                    <th>Matricula</th>
+                    <th colspan="2">Opciones</th>
+                </tr>
+            </thead>
 
 
-        {% for a in alumnos %}
-        <tbody>
-            <tr>
-                <td>{{ a.apellido }} {{ a.nombre }}</td>
-                <td>{{ a.dni }}</td>
-                <td>{{ a.curso }}</td>
-                <td>{{ a.celular }}</td>
-                <td>{{ a.matricula }}</td>
-                <td class="table-action">
-                    <a href="{% url 'modificar_alumno' a.pk %}" class="btn btn-link" title="Editar"><i data-feather="edit-3"></i></a>  
-                    <a href="{% url 'ocultar_alumno' a.pk %}" onclick="return confirm('Esta Seguro?')" class="btn btn-link" title="Dar de Baja"><i data-feather="trash"></i></a>
-                </td>
-            </tr>
-        </tbody>
-        {% endfor %}
+            {% for a in alumnos %}
+            <tbody>
+                <tr>
+                    <td>{{ a.apellido }} {{ a.nombre }}</td>
+                    <td>{{ a.dni }}</td>
+                    <td>{{ a.curso }}</td>
+                    <td>{{ a.celular }}</td>
+                    <td>{{ a.matricula }}</td>
+                    <td>{{ a.mediaBeca}} </td>
+                    <td class="table-action">
+                        <a href="{% url 'modificar_alumno' a.pk %}" class="btn btn-link" title="Editar"><i
+                                data-feather="edit-3"></i></a>
+                        <a href="{% url 'ocultar_alumno' a.pk %}" onclick="return confirm('Esta Seguro?')"
+                            class="btn btn-link" title="Dar de Baja"><i data-feather="trash"></i></a>
+                    </td>
+                </tr>
+            </tbody>
+            {% endfor %}
 
-    </table>
-</div>
+        </table>
+    </div>
 {% endblock %}

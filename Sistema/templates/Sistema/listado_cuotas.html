@@ -2,16 +2,20 @@
 
 {% block contenido %}
 <h2>Listado de Cuotas</h2>
-<a class="btn btn-secondary btn-sm" href="{% url 'nueva_cuota' %}" role="button">Nueva Cuota</a></br>
+<br/>
+<a class="btn btn-secondary btn-sm" href="{% url 'nuevo_pago' %}" role="button">Nuevo Cobro</a></br>
 </br>
-Busca un Alumno <input id="buscar" type="search">
+<form method="GET">
+    Buscar un Cuota<br />
+    <input style="width:35%" class="form-control" name="buscar" type="search" value="{{ request.GET.buscar }}" placeholder="Buscar...">
+</form>
 <div id="tabla">
     <br/>
     <table class="table table-hover my-0">
         <tr>
             <th>Alumno</th>
             <th>Monto</th>
-            <th>Mes</th>
+            <th width="23%">Numero de Mes</th>
             <th colspan="2">Opciones</th>
         </tr>
 
@@ -22,8 +26,9 @@ Busca un Alumno <input id="buscar" type="search">
             <td>{{ c.alumno }}</td>
             <td>{{ c.monto }}</td>
             <td>{{ c.numeromes }}</td>
-            <td class="table-action"><a href="{% url 'modificar_cuota' c.pk %}">Modificar</a></td>
-            <td class="table-action"><a href="#" onclick="return confirm('Esta Seguro?')">Eliminar </a></td>
+            <td class="table-action">
+                <a href="{% url 'impagar_cuota' c.pk %}" onclick="return confirm('Esta Seguro?')" class="btn btn-link" title="Eliminar"><i data-feather="trash"></i></a>
+            </td>
         </tr>
 
         {% endfor %}

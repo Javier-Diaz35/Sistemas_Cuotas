@@ -4,23 +4,34 @@
 
 <h2>Listado de Alumnos Dados de Baja</h2>
 <br />
-<form action="" method="POST">
     <div id="botones" class="form-row">
         <br />
         <div class="col-sm-5">
-            Buscar un Alumno <input id="buscar" type="search">
+            <form method="GET">
+                Buscar un Alumno<br />
+                <input class="form-control" name="buscar" type="search" value="{{ request.GET.buscar }}" placeholder="Buscar...">
+            </form>
         </div>
         <div class="col-sm-4">
-            Filtrar por Curso <select id="filtrosalumno">
-                <option selected>Curso</option>
-                <option>Primero A</option>
+            Filtrar por Curso <select name="ordencurso" class="form-control" style="width:55%" onchange="this.form.submit()">
+                
+                {% for curso in cursos %}
+                
+                {% if cursoid ==  curso.pk %}
+
+                <option selected value="{{ curso.pk }}">{{ curso.nombre }} {{ curso.division }}</option>
+
+                {% endif %}
+
+                <option value="{{ curso.pk }}">{{ curso.nombre }} {{ curso.division }}</option>
+
+                {% endfor %}
             </select>
         </div>
         <div class="col-sm-3">
-            Ordenar por <select name="ordenar" id="ordenar">
-                <option selected>------</option>
-                <option id="1">A-Z</option>
-                <option id="2">Z-A</option>
+            Ordenar por <select class="form-control" style="width:40%" name="ordenar" id="ordenar" onchange="this.form.submit()">
+                <option value="1">A-Z</option>
+                <option value="2">Z-A</option>
             </select>
         </div>
     </div>
@@ -55,5 +66,4 @@
 
         </table>
     </div>
-</form>
 {% endblock %}

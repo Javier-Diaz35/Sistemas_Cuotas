@@ -50,18 +50,16 @@
         </div>
     </div>
     </br>
+    Tipo de beca:<br/>
     <div class="form-row">
-        <div class="col-sm-3">
-            <label class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input">
-                <span class="custom-control-label">Beca Completa</span>
-              </label>
+        <br/>
+        <div class="col-sm-2">
+            <label for="beca">{{ form.beca.label }}</label>
+            {{ form.beca }}
         </div>
-        <div class="col-sm-3">
-            <label class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input">
-                <span class="custom-control-label">Media Beca</span>
-              </label>
+        <div class="col-sm-4">
+            <label for="beca">{{ form.mediaBeca.label }}</label>
+            {{ form.mediaBeca }}
         </div>
     </div>
     {{ mensaje }}
