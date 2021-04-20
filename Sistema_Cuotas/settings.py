@@ -79,7 +79,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'sistema_cuotas',
         'USER': 'root',
-        'PASSWORD': '123456789',
+        'PASSWORD': '12345678',
         'HOST': 'localhost',
         'PORT': 3306,
     }
@@ -125,10 +125,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, '/statics'),
+    os.path.join(BASE_DIR, 'Sistema/static'),
 ]
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'statics'),
-]
 

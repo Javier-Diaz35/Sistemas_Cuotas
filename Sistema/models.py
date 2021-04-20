@@ -35,19 +35,31 @@ class Cuota(models.Model):
     fechaPago = models.DateField(null=True, blank=True)
     pago = models.BooleanField(default=False)
 
+    #funcion en la que se verifica si el alumno tiene las cuotas generadas
+    #en caso de tenerlas generadas no se las hace, y en caso de no tenerlas generadas se las hace
     def verificar_cuotas(verificalumno):
+        #se fija en una variable la fecha del año actual y se busca las cuotas del año actual
         año = datetime.date.today().year
         cuotas_del_año = Esquema_Cuota.objects.filter(year = año)
         for cuota in cuotas_del_año:
                 if not Cuota.objects.filter(year = año, alumno = verificalumno, numeromes = cuota.numeromes).exists():
-                    nueva_cuota = Cuota.objects.create(alumno = verificalumno, year = año, monto = cuota.monto, numeromes = cuota.numeromes)
-                    print(verificalumno.mediaBeca)
-                    nueva_cuota.save()
-                    print('cuota generada') 
-                    print(cuota.numeromes)
-                print('verificando cuotas...')
-                print(verificalumno)
-                return True
+                    #si el alumno tiene marcado mediaBeca se le hace el descuento al monto de la cuota
+                    if verificalumno.mediaBeca:
+                        cuota.monto = cuota.monto / 2
+                        nueva_cuota = Cuota.objects.create(alumno = verificalumno, year = año, monto = cuota.monto, numeromes = cuota.numeromes)
+                        print(verificalumno.mediaBeca)
+                        nueva_cuota.save()
+                        print('cuota generada') 
+                        print(cuota.numeromes)
+        print('verificando cuotas...')
+        print(verificalumno)
+        return True
+
+    def obtener_mes(numes):
+        meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'September', 'Octubre', 'Noviembre', 'Diciembre']
+        numes = Cuota.numeromes
+        return meses[numes]
+    
 
     def __str__(self):
         return self.monto
@@ -58,7 +70,10 @@ class Esquema_Cuota(models.Model):
     monto = models.DecimalField(null=False, blank=False, max_digits=8, decimal_places=2)
     numeromes = models.IntegerField(null=False, blank=False)
 
-
+    def obtener_mes(numes):
+        meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'September', 'Octubre', 'Noviembre', 'Diciembre']
+        print(meses[1])
+        return meses[numes]
 
     def __str__(self):
         return str(self.monto)

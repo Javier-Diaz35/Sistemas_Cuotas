@@ -2,6 +2,7 @@
 
 {% block contenido %}
 
+<form method="post" action="">
 <h2>Listado de Cursos</h2>
 </br>
 <a class="btn btn-secondary btn-sm" href="{% url 'nuevo_curso' %}" role="button">Nuevo Curso</a>
@@ -20,7 +21,7 @@
             <td>{{ c.nombre }} {{ c.division }}</td>
             <td class="table-action">
                 <a href="{% url 'modificar_curso' c.pk %}" class="btn btn-link" title="Editar"><i data-feather="edit-3"></i></a>
-                <a href="#" onclick="return confirm('Esta Seguro?')" class="btn btn-link" title="Dar de Baja"><i data-feather="trash"></i></a>
+                <a href="{% url 'eliminar_curso' c.pk %}" class="btn b"onclick="return confirm('Esta Seguro?')" class="btn btn-link" title="Dar de Baja"><i data-feather="trash"></i></a>
             </td>
         </tr>
 
@@ -28,5 +29,6 @@
 
     </table>
 </div>
+</form>
 
 {% endblock %}

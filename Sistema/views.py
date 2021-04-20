@@ -3,7 +3,9 @@ from .models import Alumno, Curso, Cuota, Esquema_Cuota
 from .forms import AlumnoForm, CursoForm, CuotaForm, EsquemaForm
 from django.core.exceptions import ObjectDoesNotExist
 import datetime
-from django.db.models import Q
+from django.db.models import Q, Count
+from django.core.paginator  import Paginator
+from tablib import Dataset
 
 
 def home(request):
@@ -12,8 +14,25 @@ def home(request):
 
 
 def listado_alumno(request):
-    alumnos = Alumno.objects.filter(oculto=False).order_by('apellido')
+    alumnos = Alumno.objects.filter(oculto=False)
     cursos = Curso.objects.all()
+
+    if request.POST.get('apellido'):
+
+        alumnos = Alumno.objects.filter(oculto=False).order_by('apellido')
+    
+    if request.POST.get('dni'):
+
+        alumnos = Alumno.objects.filter(oculto=False).order_by('dni')
+    
+
+    paginator = Paginator(alumnos, 8)
+    pagina = request.GET.get('page') or 1
+    page_obj = paginator.get_page(pagina)
+    alumnos = paginator.get_page(pagina)
+    pagina_actual = int(pagina)
+    paginas = range(1, alumnos.paginator.num_pages + 1)
+
     queryset = request.GET.get('buscar')
     if queryset:
         alumnos = Alumno.objects.filter(
@@ -25,24 +44,9 @@ def listado_alumno(request):
 
     data = {
         'cursos':cursos,
-        'alumnos':alumnos     
+        'page_obj': page_obj,
+        'alumnos':alumnos  
         }
-
-    if request.method == 'POST':
-        orden = request.POST['ordenar']
-        data['ordenseleccionado'] = True
-        if orden != 0:
-            if orden == '1':
-                alumno = Alumno.objects.filter(oculto=False).order_by('apellido')
-                data['alumnos'] = alumno
-            if orden == '2':
-                alumno = Alumno.objects.filter(oculto=False).order_by('-apellido')
-                data['alumnos'] = alumno
-        idcurso = request.POST['ordencurso']
-        if idcurso != 0:
-            alumnos = Alumno.objects.filter(curso = idcurso, oculto=False)
-            data['alumnos'] = alumnos
-            data['cursoid'] = int(idcurso)
 
     return render(request, 'Sistema/listado_alumnos.html', data)
 
@@ -52,8 +56,7 @@ def nuevo_alumno(request):
         'form':AlumnoForm()
 
     }
-    if request.POST.get('becasi'):
-            data['becaseleccion'] = True
+
     if request.method == 'POST':
         formulario = AlumnoForm(request.POST)
         print(formulario)
@@ -63,7 +66,7 @@ def nuevo_alumno(request):
             data['mensaje'] = "Guardado Correctamente"
         else:
             data['mensaje'] = formulario.errors
-    return render(request, 'Sistema/nuevo_alumno.html', data)
+    return render(request, 'Sistema/import_excel.html', data)
 
 def modificar_alumno(request, pk):
     alumno = Alumno.objects.get(pk = pk)
@@ -85,7 +88,7 @@ def ocultar_alumno(request, pk):
     alumno.oculto = True
     alumno.save()
 
-    return redirect("listado_alumnos")
+    return redirect(to="listado_alumnos")
 
 def desocultar_alumno(request, pk):
     alumno = Alumno.objects.get(pk = pk)
@@ -93,6 +96,12 @@ def desocultar_alumno(request, pk):
     alumno.save()
 
     return redirect("listado_alumnos")
+
+def eliminar_alumno(request, pk):
+    alumno = Alumno.objects.get(pk = pk)
+    alumno.delete()
+
+    return redirect(request, 'Sistema/alumnos_ocultos.html')
 
 def listado_alumnos_oculto(request):
     cursos = Curso.objects.all()
@@ -146,8 +155,22 @@ def modificar_curso(request, pk):
 
     return render(request, template, data)
 
+def eliminar_curso(request, pk):
+    curso = Curso.objects.get(pk = pk)
+    curso.delete()
+
+    return redirect(request, 'Sistema/listado_cursos.html')
+
 def listado_cuota(request):
     cuotas = Cuota.objects.filter(pago = True)
+
+    queryset = request.GET.get('buscar')
+    if queryset:
+        cuotas = Cuota.objects.filter(
+            
+            Q(alumno__nombre__icontains = queryset)            
+            ).filter(pago = True).distinct()
+
     data = {
         'cuotas':cuotas
         }
@@ -277,3 +300,49 @@ def nuevo_esquema(request):
             formulario.save()
             data['mensaje'] = "Guardado Correctamente"
     return render(request, 'Sistema/nuevo_esquema.html', data)
+
+def historial(request):
+    año = datetime.date.today().year
+
+    history = Cuota.objects.filter(year = año).order_by('alumno')
+
+    queryset = request.GET.get('buscar')
+    if queryset:
+        history = Cuota.objects.filter(
+            
+            Q(alumno__nombre__icontains = queryset)            
+            ).distinct()
+
+    if request.POST.get('añolectivo') == "2020":
+        history = Cuota.objects.filter(year = "2020").order_by('alumno')
+    
+    if request.POST.get('añolectivo') == "2021":
+        history = Cuota.objects.filter(year = "2021").order_by('alumno')
+
+    data = {
+        'pagos':history
+    }
+
+    return render(request, 'Sistema/historial.html', data)
+
+def informes(request):
+
+    return render(request, 'Sistema/informes.html', )
+
+def importar(request):
+    #template = loader.get_template('export/importar.html')  
+    if request.method == 'POST':  
+        alumno_resource = AlumnoResource()
+        dataset = Dataset()  
+        #print(dataset)
+        nuevos_alumnos = request.FILES['xlsfile']  
+        #print(nuevas_personas)
+        imported_data = dataset.load(nuevas_personas.read())  
+        #print(dataset)
+        result = alumno_resource.import_data(dataset, dry_run=True) # Test the data import  
+        #print(result.has_errors())  
+        if not result.has_errors(): 
+            alumno_resource.import_data(dataset, dry_run=False) # Actually import now  
+
+
+    return render(request, 'Sistema/importar.html')

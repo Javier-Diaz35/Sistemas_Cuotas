@@ -195,6 +195,49 @@
 	box-sizing: border-box
 }
 
+.contenido .menu {
+	height: auto;
+
+}
+
+.principal {
+	padding: 30px
+}
+
+.contenido .menu .opciones {
+	display: flex;
+    justify-content: space-between;
+    margin: 30px auto 0px;
+}
+
+.opciones .nuevo_alumno a {
+	margin-top: 15px;
+}
+
+.opciones .importar a {
+	margin-top: 15px;
+}
+
+.opciones .año select {
+	margin-top: 15px;
+	width: 100%;
+}
+
+.opciones .curso select {
+	margin-top: 15px;
+	width: 100%;
+}
+
+.contenido .tabla {
+	margin: 0px auto;
+}
+.tabla table {
+	margin: 0;
+	width: 100%;
+
+}
+
+
 html {
 	font-family: sans-serif;
 	line-height: 1.15;
@@ -412,12 +455,27 @@ textarea {
 	margin: 0;
 	font-family: inherit;
 	font-size: inherit;
-	line-height: inherit
+	line-height: inherit;
+	border: 1px solid #ccc;
+	outline: none;
+
 }
+
+.input[type="text"]{
+    display: flex;
+    padding: 5px 15px;
+    width: 300px;
+    height: 35px;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    outline: none;
+}
+
 
 button,
 input {
-	overflow: visible
+	overflow: visible;
+	outline: none;
 }
 
 button,
@@ -3962,7 +4020,8 @@ input[type=submit].btn-block {
 .input-group-prepend .btn+.input-group-text,
 .input-group-prepend .input-group-text+.btn,
 .input-group-prepend .input-group-text+.input-group-text {
-	margin-left: -1px
+	margin-left: -1px;
+	outline: none;
 }
 
 .input-group-prepend {
@@ -3986,7 +4045,8 @@ input[type=submit].btn-block {
 	white-space: nowrap;
 	background-color: #e9ecef;
 	border: 1px solid #ced4da;
-	border-radius: .2rem
+	border-radius: .2rem;
+	outline: none;
 }
 
 .input-group-text input[type=checkbox],
@@ -4008,12 +4068,14 @@ input[type=submit].btn-block {
 	padding: .35rem 1rem;
 	font-size: .925rem;
 	line-height: 1.5;
-	border-radius: .3rem
+	border-radius: .3rem;
+	outline: none;
 }
 
 .input-group-sm>.custom-select,
 .input-group-sm>.form-control:not(textarea) {
-	height: calc(1.425rem + 2px)
+	height: calc(1.425rem + 2px);
+	outline: none;
 }
 
 .input-group-sm>.custom-select,
@@ -4025,12 +4087,14 @@ input[type=submit].btn-block {
 	padding: .15rem .5rem;
 	font-size: .75rem;
 	line-height: 1.5;
-	border-radius: .1rem
+	border-radius: .1rem;
+	outline: none;
 }
 
 .input-group-lg>.custom-select,
 .input-group-sm>.custom-select {
-	padding-right: 1.7rem
+	padding-right: 1.7rem;
+	outline: none;
 }
 
 .input-group>.input-group-append:last-child>.btn:not(:last-child):not(.dropdown-toggle),
@@ -4040,7 +4104,8 @@ input[type=submit].btn-block {
 .input-group>.input-group-prepend>.btn,
 .input-group>.input-group-prepend>.input-group-text {
 	border-top-right-radius: 0;
-	border-bottom-right-radius: 0
+	border-bottom-right-radius: 0;
+	outline: none;
 }
 
 .input-group>.input-group-append>.btn,
@@ -4050,7 +4115,8 @@ input[type=submit].btn-block {
 .input-group>.input-group-prepend:not(:first-child)>.btn,
 .input-group>.input-group-prepend:not(:first-child)>.input-group-text {
 	border-top-left-radius: 0;
-	border-bottom-left-radius: 0
+	border-bottom-left-radius: 0;
+	outline: none;
 }
 
 .custom-control {
@@ -4071,37 +4137,44 @@ input[type=submit].btn-block {
 	z-index: -1;
 	width: 1rem;
 	height: 1.15625rem;
-	opacity: 0
+	opacity: 0;
+	outline: none;
 }
 
 .custom-control-input:checked~.custom-control-label:before {
 	color: #fff;
 	border-color: #3b7ddd;
-	background-color: #3b7ddd
+	background-color: #3b7ddd;
+	outline: none;
 }
 
 .custom-control-input:focus~.custom-control-label:before {
-	box-shadow: 0 0 0 .2rem rgba(59, 125, 221, .25)
+	box-shadow: 0 0 0 .2rem rgba(59, 125, 221, .25);
+	outline: none;
 }
 
 .custom-control-input:focus:not(:checked)~.custom-control-label:before {
-	border-color: #a8c5f0
+	border-color: #a8c5f0;
+	outline: none;
 }
 
 .custom-control-input:not(:disabled):active~.custom-control-label:before {
 	color: #fff;
 	background-color: #d3e2f7;
-	border-color: #d3e2f7
+	border-color: #d3e2f7;
+	outline: none;
 }
 
 .custom-control-input:disabled~.custom-control-label,
 .custom-control-input[disabled]~.custom-control-label {
-	color: #6c757d
+	color: #6c757d;
+	outline: none;
 }
 
 .custom-control-input:disabled~.custom-control-label:before,
 .custom-control-input[disabled]~.custom-control-label:before {
-	background-color: #e9ecef
+	background-color: #e9ecef;
+	outline: none;
 }
 
 .custom-control-label {
@@ -12474,7 +12547,6 @@ a.text-dark:hover {
 
 .card {
 	margin-bottom: 24px;
-	box-shadow: 0 0 .875rem 0 rgba(33, 37, 41, .05)
 }
 
 .card-header {
@@ -13751,6 +13823,9 @@ a {
 		transform: rotate(1turn)
 	}
 }
+
+
+
 
 .fa-rotate-90 {
 	-ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=1)";

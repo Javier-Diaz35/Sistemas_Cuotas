@@ -3,7 +3,7 @@
 {% block contenido %}
 <h2>Listado de Cuotas</h2>
 <br/>
-<a class="btn btn-secondary btn-sm" href="{% url 'nuevo_pago' %}" role="button">Nuevo Cobro</a></br>
+<a class="btn btn-secondary" href="{% url 'nuevo_pago' %}" role="button">Nuevo Cobro</a></br>
 </br>
 <form method="GET">
     Buscar un Cuota<br />
@@ -12,25 +12,28 @@
 <div id="tabla">
     <br/>
     <table class="table table-hover my-0">
-        <tr>
-            <th>Alumno</th>
-            <th>Monto</th>
-            <th width="23%">Numero de Mes</th>
-            <th colspan="2">Opciones</th>
-        </tr>
-
+        <thead>
+            <tr>
+                <th>Alumno</th>
+                <th>Monto</th>
+                <th>Fecha de pago</th>
+                <th width="23%">Numero de Mes</th>
+                <th colspan="2">Opciones</th>
+            </tr>
+        </thead>
 
         {% for c in cuotas %}
-
-        <tr>
-            <td>{{ c.alumno }}</td>
-            <td>{{ c.monto }}</td>
-            <td>{{ c.numeromes }}</td>
-            <td class="table-action">
-                <a href="{% url 'impagar_cuota' c.pk %}" onclick="return confirm('Esta Seguro?')" class="btn btn-link" title="Eliminar"><i data-feather="trash"></i></a>
-            </td>
-        </tr>
-
+        <tbody>
+            <tr>
+                <td>{{ c.alumno }}</td>
+                <td>{{ c.monto }}</td>
+                <td>{{ c.fechaPago }}</td>
+                <td>{{ c.numeromes }}</td>
+                <td class="table-action">
+                    <a href="{% url 'impagar_cuota' c.pk %}" onclick="return confirm('Esta Seguro?')" class="btn btn-link" title="Eliminar"><i data-feather="trash"></i></a>
+                </td>
+            </tr>
+        </tbody>
         {% endfor %}
 
     </table>

@@ -8,16 +8,9 @@
     <meta name="description" content="Responsive Web UI Kit &amp; Dashboard Template based on Bootstrap">
     <meta name="author" content="AdminKit">
     <meta name="keywords" content="adminkit, bootstrap, web ui kit, dashboard template, admin template">
-    <!--<script type="text/javascript" src="js/cambiarpestaña.js"></script> -->
     <link rel="shortcut icon" href="{% static 'Sistema/img/icons/logo-fray.png' %}" />
-    <script type="text/javascript" src="{% static 'Sistema/js/sidebar.js' %}"></script>
-    <script type="text/javascript" src="{% static 'Sistema/js/bootstrap.js' %}"></script>
-    <script type="text/javascript" src="{% static 'Sistema/js/feather.js' %}"></script>
-    <script type="text/javascript" src="{% static 'Sistema/js/moment.js' %}"></script>
-    <script type="text/javascript" src="{% static 'Sistema/js/app.js' %}"></script>
-    <script type="text/javascript" src="{% static 'Sistema/js/filtrar.js' %}"></script>
     <title>Cobranzas</title>
-
+    <!--<script src="{% static 'Sistema/js/funciones.js' %}"></script> -->
     <link rel="stylesheet" href="{% static 'Sistema/css/app.css' %}">
 </head>
 
@@ -27,18 +20,10 @@
             <div class="sidebar-content js-simplebar">
                 <a class="sidebar-brand" href="index.html">
                     <img style="width:39px; height: 45px;" src="{% static 'Sistema/img/icons/logo-fray.png' %}" />
-                    <span class="align-middle">  Cobranzas</span>
+                    <span class="align-middle"> Cobranzas</span>
                 </a>
                 <br />
                 <ul class="sidebar-nav">
-                    <li class="sidebar-header">
-                        Inicio
-                    </li>
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="{% url 'ultimos_cobros' %}">
-                            <i class="align-middle" data-feather="dollar-sign"></i> <span class="align-middle">Ultimos
-                                Cobros</span>
-                        </a>
                     </li>
                     <li class="sidebar-header">
                         Paginas
@@ -46,17 +31,20 @@
                     <br />
                     <li class="sidebar-item">
                         <a class="sidebar-link" href="{% url 'listado_cuota' %}">
-                            <i class="align-middle" data-feather="dollar-sign"></i> <span class="align-middle">Cobros</span>
+                            <i class="align-middle" data-feather="dollar-sign"></i> <span
+                                class="align-middle">Cobros</span>
                         </a>
-                    <br />
+                        <br />
                     <li class="sidebar-item">
                         <a href="#ui" data-toggle="collapse" class="sidebar-link collapsed">
                             <i class="align-middle" data-feather="user"></i> <span class="align-middle">Alumnos</span>
                         </a>
                         <ul id="ui" class="sidebar-dropdown list-unstyled collapse " data-parent="#sidebar">
-                            <li class="sidebar-item"><a class="sidebar-link" href="{% url 'listado_alumnos' %}">Listado de Alumnos</a>
+                            <li class="sidebar-item"><a class="sidebar-link" href="{% url 'listado_alumnos' %}">Listado
+                                    de Alumnos</a>
                             </li>
-                            <li class="sidebar-item"><a class="sidebar-link" href="{% url 'listado_alumnos_oculto' %}">Dados de Baja</a></li>
+                            <li class="sidebar-item"><a class="sidebar-link"
+                                    href="{% url 'listado_alumnos_oculto' %}">Dados de Baja</a></li>
                         </ul>
                     </li>
                     <br />
@@ -66,12 +54,18 @@
                                 class="align-middle">Administracion</span>
                         </a>
                         <ul id="admin" class="sidebar-dropdown list-unstyled collapse " data-parent="#sidebar">
-                            <li class="sidebar-item"><a class="sidebar-link" href="{% url 'listado_curso' %}">Cursos</a></li>
-                            <li class="sidebar-item"><a class="sidebar-link" href="{% url 'listado_esquema_cuota' %}">Esquema Cuota</a></li>
+                            <li class="sidebar-item"><a class="sidebar-link" href="{% url 'listado_curso' %}">Cursos</a>
+                            </li>
+                            <li class="sidebar-item"><a class="sidebar-link"
+                                    href="{% url 'listado_esquema_cuota' %}">Esquema Cuota</a></li>
+                            <li class="sidebar-item"><a class="sidebar-link"
+                                        href="{% url 'historial' %}">Historial</a>
+                            </li>
+                            <li class="sidebar-item"><a class="sidebar-link"
+                                href="{% url 'informes' %}">Informes</a></li>
                         </ul>
                     </li>
                 </ul>
-
             </div>
         </nav>
         <div class="main">
@@ -90,41 +84,46 @@
                             <div class="card">
                                 <div class="card-header">
                                     <div class="card-body">
-                                        
-                                            <div class="card">
-                                                <div id="principal" class="box">
+                                        <div class="card">
+                                            <div id="principal" class="principal">
+                                                {% block contenido %}
 
-                                                    {% block contenido %}
-
-                                                    {% endblock %}
-
-
-                                                </div>
-                                        
+                                                {% endblock %}
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-        </div>
-        </main>
+            </main>
 
-        <footer class="footer">
-            <div class="container-fluid">
-                <div class="row text-muted">
-                    <div class="col-6 text-left">
-                        <p class="mb-0">
-                            <a href="#" class="text-muted"><strong>Cobros de Cuotas - Fray momerto esquiu</strong></a>
-                            &copy;
-                        </p>
+            <footer class="footer">
+                <div class="container-fluid">
+                    <div class="row text-muted">
+                        <div class="col-6 text-left">
+                            <p class="mb-0">
+                                <a href="#" class="text-muted"><strong>Cobros de Cuotas - Fray momerto
+                                        esquiu</strong></a>
+                                &copy;
+                            </p>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </footer>
-    </div>
+            </footer>
+        </div>
     </div>
 
+    <script type="text/javascript" src="{% static 'Sistema/js/sidebar.js' %}"></script>
+    <script type="text/javascript" src="{% static 'Sistema/js/bootstrap.js' %}"></script>
+    <script type="text/javascript" src="{% static 'Sistema/js/feather.js' %}"></script>
+    <script type="text/javascript" src="{% static 'Sistema/js/moment.js' %}"></script>
+    <script type="text/javascript" src="{% static 'Sistema/js/app.js' %}"></script>
+    <script type="text/javascript" src="{% static 'Sistema/js/filtrar.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+        integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
 
     <script>
         var $ = jQuery.noConflict();

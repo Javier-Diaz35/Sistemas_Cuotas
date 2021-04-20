@@ -1,73 +1,122 @@
 {% extends 'Sistema/base.html' %}
 
+{% load static %}
+
 {% block contenido %}
+<form method="POST">
+    {% csrf_token %}
+    <div class="contenido">
+        <div class="menu">
+            <h2>Listado de Alumnos</h2>
+            <div class="opciones">
+                <div class="nuevo_alumno">
+                    <a class="btn btn-secondary" href="{% url 'nuevo_alumno' %}" role="button">Nuevo Alumno</a>
+                </div>
+                <div class="importar">
+                    <a onclick="#" class="btn btn-success">Importar XLS</a  >
+                </div>
+                <div class="buscar">
+                    <form method="GET">
+                        Buscar un Alumno<br />
+                        <input class="form-control" name="buscar" type="search" value="{{ request.GET.buscar }}"
+                            placeholder="Buscar...">
+                    </form>
+                </div>
+                <div class="ordar">
+                    Filtrar por Curso <select name="ordencurso" class="form-control" >
 
-    <h2>Listado de Alumnos</h2>
-    </br>
-    <a class="btn btn-secondary btn-sm" href="{% url 'nuevo_alumno' %}" role="button">Nuevo Alumno</a> 
-    <a class="btn btn-success btn-sm" href="#" role="button">Importar de un xls</a>
-    <br />
-    <br />
-    <div id="botones" class="form-row">
-        <br />
-        <div class="col-sm-4">
-            <form method="GET">
-                Buscar un Alumno<br />
-                <input class="form-control" name="buscar" type="search" value="{{ request.GET.buscar }}" placeholder="Buscar...">
-            </form>
+                        <option value="0" selected>--------------------</option>
+
+                        {% for curso in cursos %}
+
+                            <option value="{{ curso.pk }}">{{ curso.nombre }} {{ curso.division }}</option>
+
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
         </div>
-        <div class="col-sm-4">
-            Filtrar por Curso <select name="ordencurso" class="form-control" style="width:55%"
-                onchange="this.form.submit()">
-                {% for curso in cursos %}
+        <br />
+        <br />
+        <div class="tabla">
+            <table class="table table-hover my-0">
+                <thead>
+                    <tr>
+                        <th><button type="submit" class="btn btn-link btn-fw" name="apellido" value="apellido">Apellido
+                                y
+                                Nombre</button></th>
+                        <th><button type="submit" class="btn btn-link btn-fw" name="dni" value="dni">D.N.I</button></th>
+                        <th>Curso</th>
+                        <th>Celular</th>
+                        <th>Matricula</th>
+                        <th colspan="2">Opciones</th>
+                    </tr>
+                </thead>
 
-                {% if cursoid ==  curso.pk %}
 
-                <option selected value="{{ curso.pk }}">{{ curso.nombre }} {{ curso.division }}</option>
+                {% for a in alumnos %}
+                <tbody>
+                    <tr>
+                        <td>{{ a.apellido }} {{ a.nombre }}</td>
+                        <td>{{ a.dni }}</td>
+                        <td>{{ a.curso }}</td>
+                        <td>{{ a.celular }}</td>
+                        <td>{{ a.matricula }}</td>
+                        <td class="table-action">
+                            <a href="{% url 'modificar_alumno' a.pk %}" class="btn btn-link" title="Editar"><i
+                                    data-feather="edit-3"></i></a>
+                            <button type="button" onclick="confirmarEliminarAlumno({{a.id}})" class="btn btn-link"
+                                title="Dar de Baja"><i data-feather="trash"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+                {% endfor %}
 
+            </table>
+        </div>
+        <br />
+        <br />
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center pagination-lg">
+                {% if alumnos.has_previous  %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ alumnos.previous_page_number }}" tabindex="-1"
+                        aria-disabled="true">&laquo;</a>
+                </li>
                 {% endif %}
 
-                <option value="{{ curso.pk }}">{{ curso.nombre }} {{ curso.division }}</option>
-
+                {% for i in alumnos.paginator.page_range %}
+                {% if alumnos.number == i %}
+                <li class="page-item active"><a class="page-link" href="?page={{ i }}">{{ i }} <a
+                            class="sr-only">(current)</a></a></li>
+                {% else %}
+                <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                {% endif %}
                 {% endfor %}
-            </select>
-        </div>
+
+                {% if alumnos.has_next  %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ alumnos.next_page_number }}">&raquo;</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ alumnos.paginator.num_pages }}">Ultima</a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
     </div>
-    <div id="tabla">
-        <br />
-        <br />
-        <table class="table table-hover my-0">
-            <thead>
-                <tr>
-                    <th>Apellido y Nombre</th>
-                    <th>D.N.I</th>
-                    <th>Curso</th>
-                    <th>Celular</th>
-                    <th>Matricula</th>
-                    <th colspan="2">Opciones</th>
-                </tr>
-            </thead>
+</form>
+  
+  
 
+  <div class="modal fade" id="excel" role="dialog" name="excel">
 
-            {% for a in alumnos %}
-            <tbody>
-                <tr>
-                    <td>{{ a.apellido }} {{ a.nombre }}</td>
-                    <td>{{ a.dni }}</td>
-                    <td>{{ a.curso }}</td>
-                    <td>{{ a.celular }}</td>
-                    <td>{{ a.matricula }}</td>
-                    <td>{{ a.mediaBeca}} </td>
-                    <td class="table-action">
-                        <a href="{% url 'modificar_alumno' a.pk %}" class="btn btn-link" title="Editar"><i
-                                data-feather="edit-3"></i></a>
-                        <a href="{% url 'ocultar_alumno' a.pk %}" onclick="return confirm('Esta Seguro?')"
-                            class="btn btn-link" title="Dar de Baja"><i data-feather="trash"></i></a>
-                    </td>
-                </tr>
-            </tbody>
-            {% endfor %}
+  </div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="{% static 'Sistema/js/funciones.js' %}"></script>
 
-        </table>
-    </div>
 {% endblock %}
+
+
+

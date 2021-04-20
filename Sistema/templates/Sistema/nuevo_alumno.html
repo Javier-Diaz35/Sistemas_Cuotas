@@ -1,11 +1,12 @@
 {% extends 'Sistema/base.html' %}
 
+{% load static %}
 
 {% block contenido %}
 
 <h2>Nuevo Alumno</h2>
 
-<form action="" method="POST">
+<form action="" method="POST" autocomplete="off">
     {% csrf_token %}
 
     <br />
@@ -41,20 +42,18 @@
             {{ form.matricula }}
         </div>
         <div class="col-sm-3">
-
-        </div>
+        </div>  
         <div class="col-sm-3">
-            </br>
             <label for="curso">{{ form.curso.label }}</label>
             {{ form.curso }}
         </div>
     </div>
     </br>
-    Tipo de beca:<br/>
+    Tipo de beca:<br />
     <div class="form-row">
-        <br/>
+        <br />
         <div class="col-sm-2">
-            <label for="beca">{{ form.beca.label }}</label>
+            Beca completa
             {{ form.beca }}
         </div>
         <div class="col-sm-4">
@@ -68,4 +67,78 @@
     <a class="btn btn-danger" href="{% url 'listado_alumnos' %}" role="button">Cancelar</a>
 
 </form>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="{% static 'Sistema/js/funciones.js' %}"></script>
+<!-- <script type="text/javascript">
+    $(document).ready(function () {
+
+        let input_apellido = document.getElementById("id_apellido");
+        let input_nombre = document.getElementById("id_nombre");
+        let input_telefono = document.getElementById("id_telefono");
+        let input_dni = document.getElementById("id_dni");
+        let input_matricula = document.getElementById("id_matricula");
+
+        $(input_nombre).keyup(function (e) {
+            if (input_nombre.value.length == 0) {
+                input_nombre.style.outline = "none";
+                input_nombre.style.border = "1px solid #ccc";
+            }
+            if (input_nombre.value.length < 4) {
+                input_nombre.style.outline = "none";
+                input_nombre.style.border = "1px solid #CB4335";
+            }
+            if (input_nombre.value.length >= 4) {
+                input_nombre.style.outline = "none";
+                input_nombre.style.border = "1px solid #28B463";
+            }
+        }); 
+
+        $(input_apellido).keyup(function (e) {
+            if (input_apellido.value.length == 0) {
+                input_apellido.style.outline = "none";
+                input_apellido.style.border = "1px solid #ccc";
+            }
+            if (input_apellido.value.length < 4) {
+                input_apellido.style.outline = "none";
+                input_apellido.style.border = "1px solid #CB4335";
+            }
+            if (input_apellido.value.length >= 4) {
+                input_apellido.style.outline = "none";
+                input_apellido.style.border = "1px solid #28B463";
+            }
+        });
+
+        $(input_telefono).keyup(function (e) {
+            if (input_telefono.value.length == 0) {
+                input_telefono.style.outline = "none";
+                input_telefono.style.border = "1px solid #ccc";
+            }
+            if (input_telefono.value.length < 4) {
+                input_telefono.style.outline = "none";
+                input_telefono.style.border = "1px solid #CB4335";
+            }
+            if (input_telefono.value.length >= 6) {
+                input_telefono.style.outline = "none";
+                input_telefono.style.border = "1px solid #28B463";
+            }
+        });
+
+        $(input_dni).keyup(function (e) {
+            if (input_dni.value.length == 0) {
+                input_dni.style.outline = "none";
+                input_dni.style.border = "1px solid #ccc";
+            }
+            if (input_dni.value.length < 4) {
+                input_dni.style.outline = "none";
+                input_dni.style.border = "1px solid #CB4335";
+            }
+            if (input_dni.value.length >= 8) {
+                input_dni.style.outline = "none";
+                input_dni.style.border = "1px solid #28B463";
+            }
+        });
+
+    });
+</script> -->
 {% endblock %}

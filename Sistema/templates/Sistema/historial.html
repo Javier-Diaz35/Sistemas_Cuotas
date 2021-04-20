@@ -1,122 +1,60 @@
 {% extends 'Sistema/base.html' %}
 
+{% load static %}
 
 {% block contenido %}
-<br>
-<h3>Historial de Pagos</h3>
-</br>
-<div id="filtros">
-    <b><a id="filtrar"><i data-feather="sliders"></i> Filtrar</a></b>
-    <h2 class="card-title mb-0">
-        <div class="col-md-12">
-            <section id="filtros" class="seccionFiltros" style="display:none">
-                <br />
-                <div class="form-row">
-                    <div class="col-sm-2">
-                        Curso<br />
-                        <select id="seleccionCurso" class="form-control">
-                            <option selected>Curso...</option>
-                            <option>1° A</option>
-                            <option>1° B</option>
-                            <option>2° A</option>
-                        </select>
-                    </div>
-                    <div class="col-sm-3">
-                        Alumno<br />
-                        <select id="seleccionAlumno" class="form-control">
-                            <option selected>Alumno...</option>
-                            <option>Javier Diaz</option>
-                            <option>Cesar Castellaro</option>
-                            <option>Agustin Centamori</option>
-                        </select>
-                    </div>
-                    <div class="col-sm-2">
-                        Año Lectivo<br />
-                        <select id="seleccionAlumno" class="form-control">
-                            <option selected>Año...</option>
-                            <option>2019</option>
-                            <option>2018</option>
-                            <option>2017</option>
-                        </select>
-                    </div>
-                    <div class="col-sm-2">
-                        </br>
-                        <button type="button" class="btn btn-dark">Aplicar</button>
-                    </div>
-
-                </div>
-                <br />
-            </section>
-            <br />
-            <br />
+<br />
+<br />
+<div class="contenido">
+    <div class="menu">
+        <h3>Historial de Pagos</h3>
+        <div class="opciones">
+            <div class="buscar">
+                <form method="GET">
+                    Buscar un Alumno<br />
+                    <input class="form-control" name="buscar" type="search" value="{{ request.GET.buscar }}"
+                        placeholder="Buscar...">
+                </form>
+            </div>
+            <div>
+                <form method="POST">
+                    {% csrf_token %}
+                    Año lectivo <select class="form-control" name="añolectivo" id="añolectivo" onchange="this.form.submit()">
+                        <option selected>----------</option>
+                        <option >2020</option>
+                        <option >2021</option>
+                    </select>
+                </form>
+            </div>
+            <div class="importar">
+                <a onclick="mensaje()" href="#" class="btn btn-danger">PDF</a>
+            </div>
         </div>
-    </h2>
+    </div>
+    <div class="tabla">
+        <table class="table table-hover my-0">
+            <thead>
+                    <th>Alumno</th>
+                    <th>Curso</th>
+                    <th>Fecha</th>
+                    <th>Cuota</th>
+                    <th>Monto</th>
+                </tr>
+            </thead>
+            {% for h in pagos %}
+                <tbody>
+                    <tr>
+                        <td>{{ h.alumno }}</td>
+                        <td>{{ h.curso }}</td>
+                        <td>{{ h.fechaPago }}</td>
+                        <td>{{ h.numeromes }}</td>
+                        <td>{{ h.monto }}</td>
+                    </tr>
+                </tbody>
+            {% endfor %}
+        </table>
+    </div>
 </div>
-<button type="button" class="btn btn-success">Exportar XLS</button>
-</br>
-<div id="tabla">
-    <table class="table table-bordered" style="font-size:.9em">
-        <thead>
-            <tr>
-                <th colspan="2">Marzo</th>
-                <th colspan="2">Abril</th>
-                <th colspan="2">Mayo</th>
-                <th colspan="2">Junio</th>
-                <th colspan="2">Julio</th>
-                <th colspan="2">Agosto</th>
-                <th colspan="2">Septiembre</th>
-                <th colspan="2">Octubre</th>
-                <th colspan="2">Noviembre</th>
-                <th colspan="2">Diciembre</th>
-            </tr>
-            <tr>
-                <th>Monto</th>
-                <th>Cobro</th>
-                <th>Monto</th>
-                <th>Cobro</th>
-                <th>Monto</th>
-                <th>Cobro</th>
-                <th>Monto</th>
-                <th>Cobro</th>
-                <th>Monto</th>
-                <th>Cobro</th>
-                <th>Monto</th>
-                <th>Cobro</th>
-                <th>Monto</th>
-                <th>Cobro</th>
-                <th>Monto</th>
-                <th>Cobro</th>
-                <th>Monto</th>
-                <th>Cobro</th>
-                <th>Monto</th>
-                <th>Cobro</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>$750</td>
-                <td>28/08/20</td>
-                <td>$750</td>
-                <td>28/08/20</td>
-                <td>$750</td>
-                <td>28/08/20</td>
-                <td>$750</td>
-                <td>28/08/20</td>
-                <td>$750</td>
-                <td>28/08/20</td>
-                <td>$750</td>
-                <td>28/08/20</td>
-                <td>$750</td>
-                <td>28/08/20</td>
-                <td>$750</td>
-                <td>28/08/20</td>
-                <td>$750</td>
-                <td>28/08/20</td>
-                <td>$750</td>
-                <td>28/08/20</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script src="{% static 'Sistema/js/funciones.js' %}"></script>
 {% endblock %}
