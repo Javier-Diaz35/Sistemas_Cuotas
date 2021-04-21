@@ -6,6 +6,7 @@ import datetime
 from django.db.models import Q, Count
 from django.core.paginator  import Paginator
 from tablib import Dataset
+from bootstrap_modal_forms.generic import BSModalCreateView
 
 
 def home(request):
@@ -346,3 +347,9 @@ def importar(request):
 
 
     return render(request, 'Sistema/importar.html')
+
+def importar_listado(modal):
+    template_name = "Sistema/importar_excel.html"
+    success_url = reverse_lazy('listado_alumnos')
+    
+    return render(modal, 'Sistema/listado_alumno.html')

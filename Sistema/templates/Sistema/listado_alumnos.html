@@ -13,7 +13,7 @@
                     <a class="btn btn-secondary" href="{% url 'nuevo_alumno' %}" role="button">Nuevo Alumno</a>
                 </div>
                 <div class="importar">
-                    <a onclick="#" class="btn btn-success">Importar XLS</a  >
+                    <button id="create-book" class="btn btn-primary" type="button" name="button">Importar</button>
                 </div>
                 <div class="buscar">
                     <form method="GET">
@@ -107,14 +107,24 @@
     </div>
 </form>
   
+<div class="modal fade" tabindex="-1" role="dialog" id="modal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content"></div>
+    </div>
+</div>
   
-
-  <div class="modal fade" id="excel" role="dialog" name="excel">
-
-  </div>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="{% static 'Sistema/js/funciones.js' %}"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+    
+        $("#create-book").modalForm({
+            formURL: "{% url 'importar_listado' %}"
+        });
+    
+    });
+    </script>
 
 {% endblock %}
 
