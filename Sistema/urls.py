@@ -1,8 +1,13 @@
 from django.urls import path
-from .views import home, listado_alumno, nuevo_alumno, modificar_alumno, ocultar_alumno,listado_alumnos_oculto, listado_curso, nuevo_curso, modificar_curso, nueva_cuota, listado_cuota, modificar_cuota, listado_pago, nuevo_pago, ultimos_cobros, desocultar_alumno, list_esquema_cuota, nuevo_esquema, impagar_cuota, eliminar_alumno, historial, informes, importar, eliminar_curso, importar_listado
+from django.contrib.auth.decorators import login_required
+from .views import home, listado_alumno, nuevo_alumno, modificar_alumno, ocultar_alumno, \
+     listado_alumnos_oculto, listado_curso, nuevo_curso, modificar_curso, nueva_cuota, listado_cuota, \
+      modificar_cuota, listado_pago, nuevo_pago, ultimos_cobros, desocultar_alumno, list_esquema_cuota, \
+           nuevo_esquema, impagar_cuota, eliminar_alumno, historial, informes, importar, eliminar_curso, \
+                import_excel, registro
 
 urlpatterns = [
-    path('', home, name="home"),
+    
     #Alumnos
     path('listado-alumno', listado_alumno, name="listado_alumnos"),
     path('nuevo-alumno', nuevo_alumno, name="nuevo_alumno"),
@@ -35,6 +40,8 @@ urlpatterns = [
 
     path('import', importar , name='import'),
 
-    path('importar-listado', importar_listado, name='importar_listado'),
+    path('importar-listado', import_excel, name='importar_listado'),
+
+    path('registro', registro, name='registro'),
 
 ]

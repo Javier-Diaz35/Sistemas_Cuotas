@@ -1,8 +1,10 @@
 from django import forms
 from django.forms import ModelForm
 from .models import Alumno, Curso, Cuota, Esquema_Cuota
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 
 class AlumnoForm(ModelForm):
+
 
     #nombre = forms.CharField(min_length=3, max_length=7)
 
@@ -73,6 +75,7 @@ class AlumnoForm(ModelForm):
                     'id': 'id_curso'
                 }),
         }
+
 class CursoForm(ModelForm):
 
     class Meta:
@@ -110,6 +113,8 @@ class CursoForm(ModelForm):
 
 class CuotaForm(ModelForm):
 
+
+
     class Meta:
         model = Cuota
         fields = ['alumno', 'monto', 'numeromes', 'year']
@@ -120,7 +125,6 @@ class CuotaForm(ModelForm):
                 }
             )
         }
-        
 
 class EsquemaForm(ModelForm):
 
@@ -166,3 +170,13 @@ class EsquemaForm(ModelForm):
             )
         }
 
+class FormilarioLogin(AuthenticationForm):
+    def __init__(self, *args, **kwargs):
+        super(FormilarioLogin, self).__init__(*args, **kwargs)
+        self.fields['username'].widgets.attrs['class'] = 'form-control'
+        self.fields['username'].widgets.attrs['placeholder'] = 'Nombre de Usuario'
+        self.fields['password'].widgets.attrs['class'] = 'formcontrol'
+        self.fields['password'].widgets.attrs['placeholder'] = 'Contraseña'
+
+class CustomUserCreationForm(UserCreationForm):
+    pass

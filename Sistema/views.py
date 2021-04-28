@@ -1,19 +1,51 @@
 from django.shortcuts import render, redirect
 from .models import Alumno, Curso, Cuota, Esquema_Cuota
-from .forms import AlumnoForm, CursoForm, CuotaForm, EsquemaForm
+from .forms import AlumnoForm, CursoForm, CuotaForm, EsquemaForm, FormilarioLogin, CustomUserCreationForm
 from django.core.exceptions import ObjectDoesNotExist
 import datetime
 from django.db.models import Q, Count
 from django.core.paginator  import Paginator
 from tablib import Dataset
 from bootstrap_modal_forms.generic import BSModalCreateView
+from django.contrib.auth.decorators import login_required
+from django.views.generic.edit import FormView
+from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import never_cache
+from django.views.decorators.csrf import csrf_protect
+from django.contrib.auth import login, authenticate 
+from django.contrib import messages
 
+'''class Login(FormView):
+    template_name = 'login.html'
+    form_class = FormilarioLogin
+    success_url = reverse_lazy('listado_alumnos')
+
+    @method_decorator(csrf_protect)
+    @method_decorator(never_cache)
+    def dispatch(self, *args, **kwargs):
+        if request.user.is_authenticated:
+            return HttpResponseRedirect(self.get_success_url())
+        else:
+            return super(Login, self).dispatch(request, *args, **kwargs)
+
+    def form_valid(self, form):
+        login(self.request, form.get_user())
+        return super(Login, self).form_valid(form)
+
+    @login_required(login_url='/accounts/login')
+    def home(request):
+
+        return render (request, 'Sistema/login.html')
+
+    @login_required(login_url='/accounts/login')
+'''
 
 def home(request):
 
-    return render (request, 'Sistema/home.html')
+    return render (request, 'Sistema/login.html')
 
-
+@login_required
 def listado_alumno(request):
     alumnos = Alumno.objects.filter(oculto=False)
     cursos = Curso.objects.all()
@@ -51,7 +83,7 @@ def listado_alumno(request):
 
     return render(request, 'Sistema/listado_alumnos.html', data)
 
-
+@login_required
 def nuevo_alumno(request):
     data = {
         'form':AlumnoForm()
@@ -69,6 +101,7 @@ def nuevo_alumno(request):
             data['mensaje'] = formulario.errors
     return render(request, 'Sistema/import_excel.html', data)
 
+@login_required
 def modificar_alumno(request, pk):
     alumno = Alumno.objects.get(pk = pk)
     template = 'Sistema/modificar_alumno.html'
@@ -84,6 +117,7 @@ def modificar_alumno(request, pk):
 
     return render(request, template, data)
 
+@login_required
 def ocultar_alumno(request, pk):
     alumno = Alumno.objects.get(pk = pk)
     alumno.oculto = True
@@ -91,6 +125,7 @@ def ocultar_alumno(request, pk):
 
     return redirect(to="listado_alumnos")
 
+@login_required
 def desocultar_alumno(request, pk):
     alumno = Alumno.objects.get(pk = pk)
     alumno.oculto = False
@@ -98,12 +133,14 @@ def desocultar_alumno(request, pk):
 
     return redirect("listado_alumnos")
 
+@login_required
 def eliminar_alumno(request, pk):
     alumno = Alumno.objects.get(pk = pk)
     alumno.delete()
 
     return redirect(request, 'Sistema/alumnos_ocultos.html')
 
+@login_required
 def listado_alumnos_oculto(request):
     cursos = Curso.objects.all()
     alumnos = Alumno.objects.filter(oculto=True)
@@ -121,6 +158,7 @@ def listado_alumnos_oculto(request):
 
     return render(request, 'Sistema/alumnos_ocultos.html', data)
 
+@login_required
 def listado_curso(request):
     cursos = Curso.objects.all()
     data = {
@@ -128,6 +166,7 @@ def listado_curso(request):
         }
     return render(request, 'Sistema/listado_cursos.html', data)
 
+@login_required
 def nuevo_curso(request):
     data = {
         'form':CursoForm()
@@ -141,6 +180,7 @@ def nuevo_curso(request):
             data['mensaje'] = "Guardado Correctamente"
     return render(request, 'Sistema/nuevo_curso.html', data)
 
+@login_required
 def modificar_curso(request, pk):
     curso = Curso.objects.get(pk = pk)
     template = 'Sistema/modificar_curso.html'
@@ -156,12 +196,14 @@ def modificar_curso(request, pk):
 
     return render(request, template, data)
 
+@login_required
 def eliminar_curso(request, pk):
     curso = Curso.objects.get(pk = pk)
     curso.delete()
 
     return redirect(request, 'Sistema/listado_cursos.html')
 
+@login_required
 def listado_cuota(request):
     cuotas = Cuota.objects.filter(pago = True)
 
@@ -177,6 +219,7 @@ def listado_cuota(request):
         }
     return render(request, 'Sistema/listado_cuotas.html', data)
 
+@login_required
 def nueva_cuota(request):
     data = {
         'form':CuotaForm()
@@ -190,6 +233,7 @@ def nueva_cuota(request):
             data['mensaje'] = "Guardado Correctamente"
     return render(request, 'Sistema/nueva_cuota.html', data)
 
+@login_required
 def modificar_cuota(request, pk):
     cuota = Cuota.objects.get(pk = pk)
     template = 'Sistema/modificar_cuota.html'
@@ -205,6 +249,7 @@ def modificar_cuota(request, pk):
 
     return render(request, template, data)
 
+@login_required
 def listado_pago(request):
     pagos = Pago.objects.all()
     data = {
@@ -212,6 +257,7 @@ def listado_pago(request):
         }
     return render(request, 'Sistema/listado_pago.html', data)
 
+@login_required
 def ultimos_cobros(request):
     pagos = Pago.objects.all()
     data = {
@@ -219,6 +265,7 @@ def ultimos_cobros(request):
         }
     return render(request, 'Sistema/ultimos_cobros.html', data)
 
+@login_required
 def nuevo_pago(request):
     #Se traen los datos de los modelos
     cursos = Curso.objects.all()
@@ -276,6 +323,7 @@ def nuevo_pago(request):
 
     return render(request, 'Sistema/nuevo_pago.html', data)
 
+@login_required
 def impagar_cuota(request, pk):
     cuotas = Cuota.objects.get(pk = pk)
     cuotas.pago = False
@@ -283,6 +331,7 @@ def impagar_cuota(request, pk):
 
     return redirect("listado_cuotas.html")
 
+@login_required
 def list_esquema_cuota(request):
     esquema = Esquema_Cuota.objects.all()
     data = {
@@ -290,6 +339,7 @@ def list_esquema_cuota(request):
         }
     return render(request, 'Sistema/list_esquema_cuota.html', data)
 
+@login_required
 def nuevo_esquema(request):
     data = {
         'form':EsquemaForm()
@@ -302,6 +352,7 @@ def nuevo_esquema(request):
             data['mensaje'] = "Guardado Correctamente"
     return render(request, 'Sistema/nuevo_esquema.html', data)
 
+@login_required
 def historial(request):
     año = datetime.date.today().year
 
@@ -326,10 +377,12 @@ def historial(request):
 
     return render(request, 'Sistema/historial.html', data)
 
+@login_required
 def informes(request):
 
     return render(request, 'Sistema/informes.html', )
 
+@login_required
 def importar(request):
     #template = loader.get_template('export/importar.html')  
     if request.method == 'POST':  
@@ -348,8 +401,23 @@ def importar(request):
 
     return render(request, 'Sistema/importar.html')
 
-def importar_listado(modal):
-    template_name = "Sistema/importar_excel.html"
-    success_url = reverse_lazy('listado_alumnos')
+@login_required
+def import_excel(request):
     
-    return render(modal, 'Sistema/listado_alumno.html')
+    return render(modal, 'Sistema/import_excel.html')
+
+def registro(request):
+    data = {
+        'form': CustomUserCreationForm()
+    }
+
+    if request.method == 'POST':
+        formulario = CustomUserCreationForm(data=request.POST)
+        if formulario.is_valid():
+            formulario.save()
+            user = authenticate(username=formulario.cleaned_data["username"], password=formulario.cleaned_data["password1"])
+            login(request, user)
+            messages.success(request, "Registro Correctamente")
+            return redirect(to="listado_alumnos")
+        data["form"] = formulario
+    return render(request, 'registration/registro.html', data)
