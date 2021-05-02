@@ -3,7 +3,8 @@
 {% load static %}
 
 {% block contenido %}
-<form method="POST">
+
+<form action="" method="GET">
     {% csrf_token %}
     <div class="contenido">
         <div class="menu">
@@ -112,11 +113,10 @@
 </div>
   
 
-
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="{% static 'Sistema/js/funciones.js' %}"></script>
 <script src="{% static 'Sistema/js/js.js' %}"></script>
+
 <script type="text/javascript">
     var $ = jQuery.noConflict();
     function abrir_modal_import(url){

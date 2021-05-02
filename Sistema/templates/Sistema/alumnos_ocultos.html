@@ -1,5 +1,7 @@
 {% extends 'Sistema/base.html' %}
 
+{% load static %}
+
 {% block contenido %}
 
 <div class="contenido">
@@ -32,6 +34,7 @@
             </div>
         </div>
     </div>
+    <br>
     <div class="tabla">
         <table class="table table-hover my-0">
             <tr>
@@ -53,10 +56,10 @@
                 <td>{{ a.celular }}</td>
                 <td>{{ a.matricula }}</td>
                 <td class="table-action">
-                    <a href="{% url 'desocultar_alumno' a.pk %}" onclick="return confirm('Esta Seguro?')"
-                        class="btn btn-link" title="Deshacer"><i data-feather="refresh-cw"></i></a>
-                    <a href="{% url 'eliminar_alumno' a.pk %}" onclick="return confirm('Esta Seguro?')"
-                    class="btn btn-link" title="Deshacer"><i data-feather="trash"></i></a>
+                    <button onclick="desocultarAlumno({{a.id}})"
+                        class="btn btn-link" title="Deshacer"><i data-feather="refresh-cw"></i></button>
+                    <button onclick="eliminarAlumno({{a.id}})"
+                    class="btn btn-link" title="Deshacer"><i data-feather="trash"></i></button>
                 </td>
             </tr>
 
@@ -65,4 +68,8 @@
         </table>
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+<script src="{% static 'Sistema/js/funciones.js' %}"></script>
+
 {% endblock %}

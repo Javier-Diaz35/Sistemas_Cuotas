@@ -9,13 +9,13 @@ from .views import home, listado_alumno, nuevo_alumno, modificar_alumno, ocultar
 urlpatterns = [
     
     #Alumnos
-    path('listado-alumno', listado_alumno, name="listado_alumnos"),
-    path('nuevo-alumno', nuevo_alumno, name="nuevo_alumno"),
-    path('modificar-alumno/<int:pk>', modificar_alumno, name="modificar_alumno"),
-    path('ocultar-alumno/<int:pk>', ocultar_alumno , name='ocultar_alumno'),
-    path('listado-alumno-oculto', listado_alumnos_oculto, name="listado_alumnos_oculto"),
-    path('desocultar-alumno/<int:pk>', desocultar_alumno, name="desocultar_alumno"),
-    path('eliminar-alumno/<int:pk>', eliminar_alumno, name="eliminar_alumno"),
+    path('listado-alumno/', listado_alumno, name="listado_alumnos"),
+    path('nuevo-alumno/', nuevo_alumno, name="nuevo_alumno"),
+    path('modificar-alumno/<int:pk>/', modificar_alumno, name="modificar_alumno"),
+    path('ocultar-alumno/<int:pk>/', ocultar_alumno , name='ocultar_alumno'),
+    path('listado-alumno-oculto/', listado_alumnos_oculto, name="listado_alumnos_oculto"),
+    path('desocultar-alumno/<int:pk>/', desocultar_alumno, name="desocultar_alumno"),
+    path('eliminar-alumno/<int:pk>/', eliminar_alumno, name="eliminar_alumno"),
     #Cursos
     path('listado-curso', listado_curso, name="listado_curso"),
     path('nuevo-curso', nuevo_curso, name="nuevo_curso"),

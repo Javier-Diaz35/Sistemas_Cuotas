@@ -11,7 +11,7 @@ class AlumnoForm(ModelForm):
     class Meta:
         model = Alumno
         fields = ['apellido', 'nombre', 'dni', 'celular', 'curso', 'matricula', 'beca', 'mediaBeca']
-        fields_required = ['apellido', 'nombre', 'dni', 'celular', 'curso']
+        fields_required = ['apellido', 'dni', 'celular', 'curso']
         labels = {
             'nombre' : 'Nombre',
             'apellido' : 'Apellido',

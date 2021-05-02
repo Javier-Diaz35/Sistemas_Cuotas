@@ -99,7 +99,7 @@ def nuevo_alumno(request):
             data['mensaje'] = "Guardado Correctamente"
         else:
             data['mensaje'] = formulario.errors
-    return render(request, 'Sistema/import_excel.html', data)
+    return render(request, 'Sistema/nuevo_alumno.html', data)
 
 @login_required
 def modificar_alumno(request, pk):
